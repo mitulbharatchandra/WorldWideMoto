@@ -1,7 +1,8 @@
 package com.worldwidemoto
 
-interface Platform {
-    val name: String
-}
+import org.koin.core.annotation.Single
 
-expect fun getPlatform(): Platform
+@Single
+expect class PlatformComponent() {
+    fun getInfo() : String
+}
