@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
     alias(libs.plugins.google.services)
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -18,6 +19,7 @@ kotlin {
     }
     
     listOf(
+        iosX64(),
         iosArm64(),
         iosSimulatorArm64()
     ).forEach { iosTarget ->
@@ -54,6 +56,28 @@ kotlin {
             implementation(libs.kotlinx.coroutinesSwing)
         }
     }
+    // KSP Common sourceSet
+    sourceSets.named("commonMain").configure {
+        kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
+    }
+}
+
+// KSP Tasks
+dependencies {
+    add("kspCommonMainMetadata", libs.koin.ksp.compiler)
+    add("kspAndroid", libs.koin.ksp.compiler)
+    add("kspIosX64", libs.koin.ksp.compiler)
+    add("kspIosArm64", libs.koin.ksp.compiler)
+    add("kspIosSimulatorArm64", libs.koin.ksp.compiler)
+}
+
+// KSP Metadata Trigger
+tasks.matching { it.name.startsWith("ksp") && it.name != "kspCommonMainKotlinMetadata" }.configureEach {
+    dependsOn("kspCommonMainKotlinMetadata")
+}
+
+ksp {
+    arg("KOIN_CONFIG_CHECK","true")
 }
 
 android {

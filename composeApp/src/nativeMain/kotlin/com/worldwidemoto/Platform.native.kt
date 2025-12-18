@@ -1,10 +1,8 @@
 package com.worldwidemoto
 
-import org.koin.core.annotation.Single
-
-@Single
+@org.koin.core.annotation.Single
 actual class PlatformComponent actual constructor() {
     actual fun getInfo(): String {
-        return "Java ${System.getProperty("java.version")}"
+        return "Native"
     }
 }

@@ -1,9 +1,9 @@
 package com.worldwidemoto
 
 class Greeting {
-    private val platform = getPlatform()
+    private val platform = PlatformComponent()
 
     fun greet(): String {
-        return "Hello Mit, ${platform.name}!"
+        return "Hello Mit, ${platform.getInfo()}!"
     }
 }

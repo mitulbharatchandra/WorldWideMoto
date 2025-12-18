@@ -1,9 +1,11 @@
 package com.worldwidemoto
 
 import android.os.Build
+import org.koin.core.annotation.Single
 
-class AndroidPlatform : Platform {
-    override val name: String = "Android ${Build.VERSION.SDK_INT}"
+@Single
+actual class PlatformComponent actual constructor() {
+    actual fun getInfo(): String {
+        return "Android ${Build.VERSION.SDK_INT}"
+    }
 }
-
-actual fun getPlatform(): Platform = AndroidPlatform()

@@ -64,9 +64,9 @@ kotlin {
             dependencies {
                 implementation(libs.kotlin.stdlib)
                 // Add KMP dependencies here
-                implementation(libs.koin.core)
-                implementation(libs.koin.compose.viewmodel)
-                implementation(libs.koin.annotations)
+                api(libs.koin.core)
+                api(libs.koin.compose.viewmodel)
+                api(libs.koin.annotations)
             }
         }
 
