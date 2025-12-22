@@ -33,4 +33,6 @@ plugins {
 }
 
 include(":composeApp")
-include(":core")
+include(":core:data")
+include(":core:domain")
+include(":firebase-core")

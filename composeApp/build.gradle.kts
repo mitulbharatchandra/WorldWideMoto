@@ -1,4 +1,5 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.compose.reload.gradle.project
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -29,12 +30,11 @@ kotlin {
         }
     }
     
-    jvm()
-    
     sourceSets {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            api(libs.koin.android)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -46,14 +46,12 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
-            implementation(projects.core)
+            api(libs.koin.core)
+            api(libs.koin.annotations)
+            implementation(projects.firebaseCore)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
-        }
-        jvmMain.dependencies {
-            implementation(compose.desktop.currentOs)
-            implementation(libs.kotlinx.coroutinesSwing)
         }
     }
     // KSP Common sourceSet
@@ -98,8 +96,14 @@ android {
     }
     buildTypes {
         getByName("release") {
+            isMinifyEnabled = true
+        }
+        getByName("debug") {
             isMinifyEnabled = false
         }
+    }
+    buildFeatures {
+        buildConfig = true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
