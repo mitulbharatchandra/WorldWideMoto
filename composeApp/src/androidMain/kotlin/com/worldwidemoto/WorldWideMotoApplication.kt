@@ -1,13 +1,15 @@
 package com.worldwidemoto
 
 import android.app.Application
-import com.worldwidemoto.di.initKoin
+import com.worldwidemoto.di.initKoinMitul
+import org.koin.android.ext.koin.androidContext
 
 class WorldWideMotoApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
-        initKoin()
+        initKoinMitul {
+            androidContext(this@WorldWideMotoApplication)
+        }
     }
 }
