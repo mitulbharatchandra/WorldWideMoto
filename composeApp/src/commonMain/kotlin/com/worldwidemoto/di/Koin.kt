@@ -1,6 +1,7 @@
 package com.worldwidemoto.di
 import com.firebase.core.di.FirebaseInitializer
-import com.firebase.core.di.platformModule
+import com.firebase.core.di.firebaseCoreModule
+import com.worldwidemoto.firebase.auth.di.firebaseAuthModule
 import org.koin.core.annotation.Configuration
 import org.koin.core.annotation.KoinApplication
 import org.koin.core.annotation.Module
@@ -16,10 +17,11 @@ class AppModule
 object KoinApp
 
 fun initKoinMitul(configuration : KoinAppDeclaration? = null) {
-    val koinApp = KoinApp.startKoin {
+    KoinApp.startKoin {
         modules(
             AppModule().module,
-            platformModule
+            firebaseCoreModule,
+            firebaseAuthModule
         )
         configuration?.invoke(this)
     }
