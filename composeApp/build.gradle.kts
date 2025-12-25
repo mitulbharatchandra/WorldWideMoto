@@ -48,8 +48,10 @@ kotlin {
 
             api(libs.koin.core)
             api(libs.koin.annotations)
+
             implementation(projects.firebaseCore)
             implementation(projects.firebaseAuth)
+            implementation(projects.core.designsystem)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -126,4 +128,8 @@ compose.desktop {
             packageVersion = "1.0.0"
         }
     }
+}
+
+compose.resources {
+    publicResClass = true
 }

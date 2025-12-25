@@ -35,6 +35,7 @@ plugins {
 include(":composeApp")
 include(":core:data")
 include(":core:domain")
+include(":core:designsystem")
 include(":firebase-core")
 include(":firebase-auth")
 include(":kmp-auth-api")
