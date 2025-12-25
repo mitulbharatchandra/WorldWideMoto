@@ -6,21 +6,19 @@ plugins {
 }
 
 kotlin {
-    // Target declarations - add or remove as needed below. These define
-    // which platforms this KMP module supports.
-    // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
+
     cocoapods {
-        summary = "Firebase Core iOS SDK"
+        summary = "Firebase Auth iOS SDK"
         homepage = "Link to the Shared Module homepage"
         version = "1.0"
         ios.deploymentTarget = "15.4"
         podfile = project.file("../iosApp/Podfile")
         framework {
-            baseName = "firebase-core"
+            baseName = "firebase-auth"
             isStatic = true
         }
 
-        pod("FirebaseCore") {
+        pod("FirebaseAuth") {
             version = "12.7.0"
             extraOpts += listOf("-compiler-option", "-fmodules")
         }
@@ -30,8 +28,12 @@ kotlin {
             extraOpts += listOf("-compiler-option", "-fmodules")
         }
     }
+
+    // Target declarations - add or remove as needed below. These define
+    // which platforms this KMP module supports.
+    // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
     androidLibrary {
-        namespace = "com.firebase.core"
+        namespace = "com.worldwidemoto.firebase.auth"
         compileSdk = 36
         minSdk = 24
 
@@ -52,7 +54,7 @@ kotlin {
     // A step-by-step guide on how to include this library in an XCode
     // project can be found here:
     // https://developer.android.com/kotlin/multiplatform/migrate
-    val xcfName = "firebase-coreKit"
+    val xcfName = "firebase-authKit"
 
     iosX64 {
         binaries.framework {
@@ -82,8 +84,9 @@ kotlin {
             dependencies {
                 implementation(libs.kotlin.stdlib)
                 // Add KMP dependencies here
-                implementation(projects.core.domain)
-                api(libs.koin.core)
+                implementation(projects.firebaseCore)
+                implementation(projects.kmpAuthApi)
+                api(libs.kotlinx.coroutines.core)
             }
         }
 
@@ -95,9 +98,10 @@ kotlin {
 
         androidMain {
             dependencies {
-                api(project.dependencies.platform(libs.firebase.bom))
-                api(libs.firebase.common)
-                api(libs.koin.android)
+                implementation(libs.firebase.auth)
+                // Add Android-specific dependencies here. Note that this source set depends on
+                // commonMain by default and will correctly pull the Android artifacts of any KMP
+                // dependencies declared in commonMain.
             }
         }
 
@@ -111,11 +115,13 @@ kotlin {
 
         iosMain {
             dependencies {
-                // Firebase via CocoaPods
+                // Add iOS-specific dependencies here. This a source set created by Kotlin Gradle
+                // Plugin (KGP) that each specific iOS target (e.g., iosX64) depends on as
+                // part of KMP’s default source set hierarchy. Note that this source set depends
+                // on common by default and will correctly pull the iOS artifacts of any
+                // KMP dependencies declared in commonMain.
             }
         }
-
     }
-
 
 }

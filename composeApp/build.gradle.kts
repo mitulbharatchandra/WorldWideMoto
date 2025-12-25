@@ -49,6 +49,7 @@ kotlin {
             api(libs.koin.core)
             api(libs.koin.annotations)
             implementation(projects.firebaseCore)
+            implementation(projects.firebaseAuth)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

@@ -12,4 +12,5 @@ plugins {
     alias(libs.plugins.android.lint) apply false
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.cocoapods) apply false
+    alias(libs.plugins.jetbrains.kotlin.jvm) apply false
 }
