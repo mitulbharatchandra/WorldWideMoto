@@ -52,6 +52,7 @@ kotlin {
             implementation(projects.firebaseCore)
             implementation(projects.firebaseAuth)
             implementation(projects.core.designsystem)
+            implementation(projects.feature.auth.presentation)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
