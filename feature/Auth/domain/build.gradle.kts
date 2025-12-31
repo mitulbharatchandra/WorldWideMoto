@@ -97,5 +97,8 @@ kotlin {
             }
         }
     }
+    sourceSets.commonTest.dependencies {
+        implementation(libs.kotlinx.coroutines.core)
+    }
 
 }
