@@ -56,12 +56,17 @@ kotlin {
                 implementation(compose.components.uiToolingPreview)
                 implementation(libs.androidx.lifecycle.viewmodelCompose)
                 implementation(libs.androidx.lifecycle.runtimeCompose)
+
                 implementation(projects.core.designsystem)
+                implementation(projects.feature.auth.domain)
 
                 implementation(libs.jetbrains.navigation3.ui)
                 implementation(libs.jetbrains.lifecycle.viewmodel.nav3)
                 implementation(libs.jetbrains.lifecycle.viewmodel)
                 implementation(libs.kotlinx.serialization.json)
+
+                implementation(libs.koin.core)
+                implementation(libs.koin.compose.viewmodel)
             }
         }
 

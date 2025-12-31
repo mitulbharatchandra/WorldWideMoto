@@ -22,6 +22,19 @@ class FakeAuthRepository : AuthRepository {
         return user
     }
 
+    override suspend fun signUpWithEmail(
+        email: String,
+        password: String
+    ): AuthUser {
+        val user = AuthUser(
+            id = "email_user",
+            email = email,
+            isAnonymous = false
+        )
+        currentUser = user
+        return user
+    }
+
     override suspend fun loginWithPhone(
         phoneNumber: String,
         verificationCode: String

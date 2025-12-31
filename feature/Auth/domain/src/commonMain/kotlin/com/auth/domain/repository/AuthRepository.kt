@@ -8,6 +8,11 @@ interface AuthRepository {
         password: String
     ): AuthUser
 
+    suspend fun signUpWithEmail(
+        email: String,
+        password: String
+    ): AuthUser
+
     suspend fun loginWithPhone(
         phoneNumber: String,
         verificationCode: String

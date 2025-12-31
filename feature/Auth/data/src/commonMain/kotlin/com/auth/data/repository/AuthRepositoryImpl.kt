@@ -19,6 +19,15 @@ class AuthRepositoryImpl(
             )
         )
 
+    override suspend fun signUpWithEmail(
+        email: String,
+        password: String
+    ): AuthUser =
+        authService.signUp(
+            email = email,
+            password = password
+        )
+
     override suspend fun loginWithPhone(
         phoneNumber: String,
         verificationCode: String
