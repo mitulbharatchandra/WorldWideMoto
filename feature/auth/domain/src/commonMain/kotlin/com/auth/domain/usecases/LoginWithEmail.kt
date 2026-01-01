@@ -5,11 +5,11 @@ import com.auth.domain.model.Password
 import com.auth.domain.repository.AuthRepository
 import com.kmp.auth.api.model.AuthUser
 
-class LoginWithEmail(
+open class LoginWithEmail(
     private val repository: AuthRepository
 ) {
 
-    suspend operator fun invoke(
+    open suspend operator fun invoke(
         email: String,
         password: String
     ): AuthUser {

@@ -59,6 +59,7 @@ kotlin {
 
                 implementation(projects.core.designsystem)
                 implementation(projects.feature.auth.domain)
+                implementation(projects.kmpAuthApi)
 
                 implementation(libs.jetbrains.navigation3.ui)
                 implementation(libs.jetbrains.lifecycle.viewmodel.nav3)
@@ -67,12 +68,15 @@ kotlin {
 
                 implementation(libs.koin.core)
                 implementation(libs.koin.compose.viewmodel)
+                implementation(projects.feature.auth.domain)
+                implementation(projects.kmpAuthApi)
             }
         }
 
         commonTest {
             dependencies {
                 implementation(libs.kotlin.test)
+                implementation(libs.kotlinx.coroutines.test)
             }
         }
 
@@ -95,6 +99,9 @@ kotlin {
                 // KMP dependencies declared in commonMain.
             }
         }
+    }
+    sourceSets.commonTest.dependencies {
+        implementation(libs.kotlinx.coroutines.core)
     }
 }
 

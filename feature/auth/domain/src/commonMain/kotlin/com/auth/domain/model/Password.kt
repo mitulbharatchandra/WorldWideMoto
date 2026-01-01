@@ -27,11 +27,9 @@ value class Password private constructor(
 
         fun create(password: String): Password {
             val validationState = validate(password)
-
             require(validationState.isValid) {
-                "Password does not meet security requirements"
+                throw PasswordValidationError.InvalidPassword(validationState)
             }
-
             return Password(password)
         }
     }
