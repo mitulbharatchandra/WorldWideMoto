@@ -1,6 +1,7 @@
 package com.worldwidemoto.di
 import com.auth.data.di.authDataModule
 import com.auth.domain.di.authDomainModule
+import com.auth.presentation.di.authPresentationModule
 import com.firebase.core.di.FirebaseInitializer
 import com.firebase.core.di.firebaseCoreModule
 import com.worldwidemoto.firebase.auth.di.firebaseAuthModule
@@ -25,7 +26,8 @@ fun initKoinMitul(configuration : KoinAppDeclaration? = null) {
             firebaseCoreModule,
             firebaseAuthModule,
             authDomainModule,
-            authDataModule
+            authDataModule,
+            authPresentationModule
         )
         configuration?.invoke(this)
     }
