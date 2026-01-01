@@ -1,8 +1,6 @@
 package com.auth.presentation.login
 
-import com.auth.domain.model.EmailValidationError
 import com.auth.domain.model.PasswordValidationError
-import com.auth.domain.model.PasswordValidationState
 import com.auth.domain.usecases.GetCurrentUser
 import com.auth.domain.usecases.LoginWithEmail
 import com.auth.domain.usecases.Signup
@@ -14,7 +12,6 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import kotlin.Boolean
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
