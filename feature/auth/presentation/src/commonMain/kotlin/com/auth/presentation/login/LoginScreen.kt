@@ -52,14 +52,14 @@ fun LoginRoot(
     viewModel: LoginViewModel = koinViewModel(),
     onLoginSuccess: () -> Unit,
     onForgotPasswordClick: (String?) -> Unit,
-    onCreateAccountClick: () -> Unit
+    onSigInWithPhoneClick: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     ObserveAsEvents(viewModel.events) { event ->
         when(event) {
-            LoginEvent.LoginSuccess -> TODO()
-            LoginEvent.SignupSuccess -> TODO()
+            LoginEvent.LoginSuccess -> onLoginSuccess()
+            LoginEvent.SignupSuccess -> onLoginSuccess()
         }
     }
 
@@ -68,6 +68,7 @@ fun LoginRoot(
         onAction = { action ->
             when (action) {
                 is LoginAction.OnForgotPasswordClick -> onForgotPasswordClick(action.email)
+                LoginAction.OnSigInWithPhoneClick -> onSigInWithPhoneClick()
                 else -> Unit
             }
             viewModel.onAction(action)
@@ -109,11 +110,23 @@ fun LoginScreen(
             var email by remember { mutableStateOf("") }
             OutlinedTextField(
                 value = email,
-                onValueChange = { email = it },
+                onValueChange = {
+                    email = it
+                    onAction(LoginAction.EmailChanged)
+                },
                 label = { Text("Email address") },
                 leadingIcon = { Icon(Icons.Filled.Email, contentDescription = "Email Icon") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                isError = uiState.emailValidationError != null,
+                supportingText = uiState.emailValidationError?.let {
+                    {
+                        Text(
+                            text = "Invalid Email Address",
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    }
+                }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -212,7 +225,7 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            PhoneSignInButton(onClick = {})
+            PhoneSignInButton(onClick = { onAction(LoginAction.OnSigInWithPhoneClick) })
 
             Spacer(modifier = Modifier.height(16.dp))
 

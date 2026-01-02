@@ -45,7 +45,7 @@ fun SocialAuthButton(
         shape = RoundedCornerShape(50),
         color = backgroundColor,
         border = borderColor?.let { BorderStroke(1.dp, it) },
-        onClick = { }
+        onClick = onClick
     ) {
         Row(
             modifier = Modifier
