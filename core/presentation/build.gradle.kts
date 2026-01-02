@@ -1,23 +1,39 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.android.kotlin.multiplatform.library)
+    alias(libs.plugins.android.lint)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.kotlin.serialization)
 }
-
 
 kotlin {
 
-    val xcfName = "presentationKit"
+    // Target declarations - add or remove as needed below. These define
+    // which platforms this KMP module supports.
+    // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
+    androidLibrary {
+        namespace = "com.core.presentation"
+        compileSdk = 36
+        minSdk = 24
 
-    androidTarget {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
+        withHostTestBuilder {
+        }
+
+        withDeviceTestBuilder {
+            sourceSetTreeName = "test"
+        }.configure {
+            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         }
     }
+
+    // For iOS targets, this is also where you should
+    // configure native binary output. For more information, see:
+    // https://kotlinlang.org/docs/multiplatform-build-native-binaries.html#build-xcframeworks
+
+    // A step-by-step guide on how to include this library in an XCode
+    // project can be found here:
+    // https://developer.android.com/kotlin/multiplatform/migrate
+    val xcfName = "presentationKit"
 
     iosX64 {
         binaries.framework {
@@ -56,38 +72,28 @@ kotlin {
                 implementation(compose.components.uiToolingPreview)
                 implementation(libs.androidx.lifecycle.viewmodelCompose)
                 implementation(libs.androidx.lifecycle.runtimeCompose)
-
-                implementation(projects.core.designsystem)
-                implementation(projects.core.presentation)
-                implementation(projects.feature.auth.domain)
-                implementation(projects.kmpAuthApi)
-
-                implementation(libs.jetbrains.navigation3.ui)
-                implementation(libs.jetbrains.lifecycle.viewmodel.nav3)
-                implementation(libs.jetbrains.lifecycle.viewmodel)
-                implementation(libs.kotlinx.serialization.json)
-
-                implementation(libs.koin.core)
-                implementation(libs.koin.compose.viewmodel)
-                implementation(projects.feature.auth.domain)
-                implementation(projects.kmpAuthApi)
             }
         }
 
         commonTest {
             dependencies {
                 implementation(libs.kotlin.test)
-                implementation(libs.kotlinx.coroutines.test)
             }
         }
 
         androidMain {
             dependencies {
-                implementation(libs.androidx.activity.compose)
-                //implementation(compose.uiTooling)
                 // Add Android-specific dependencies here. Note that this source set depends on
                 // commonMain by default and will correctly pull the Android artifacts of any KMP
                 // dependencies declared in commonMain.
+            }
+        }
+
+        getByName("androidDeviceTest") {
+            dependencies {
+                implementation(libs.androidx.runner)
+                implementation(libs.androidx.core)
+                implementation(libs.androidx.testExt.junit)
             }
         }
 
@@ -95,44 +101,11 @@ kotlin {
             dependencies {
                 // Add iOS-specific dependencies here. This a source set created by Kotlin Gradle
                 // Plugin (KGP) that each specific iOS target (e.g., iosX64) depends on as
-                // part of KMPs default source set hierarchy. Note that this source set depends
+                // part of KMP’s default source set hierarchy. Note that this source set depends
                 // on common by default and will correctly pull the iOS artifacts of any
                 // KMP dependencies declared in commonMain.
             }
         }
     }
-    sourceSets.commonTest.dependencies {
-        implementation(libs.kotlinx.coroutines.core)
-    }
-}
 
-compose.resources {
-    publicResClass = true
-}
-
-android {
-    namespace = "com.auth.presentation"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
-
-    defaultConfig {
-        minSdk = libs.versions.android.minSdk.get().toInt()
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = true
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-}
-
-dependencies {
-    debugImplementation(compose.uiTooling)
 }

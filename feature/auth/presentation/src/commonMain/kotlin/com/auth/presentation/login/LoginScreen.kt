@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -39,11 +40,45 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.core.presentation.util.ObserveAsEvents
 import com.kmp.designsystem.theme.AppTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.viewmodel.koinViewModel
+
 
 @Composable
-fun LoginScreen() {
+fun LoginRoot(
+    viewModel: LoginViewModel = koinViewModel(),
+    onLoginSuccess: () -> Unit,
+    onForgotPasswordClick: (String?) -> Unit,
+    onCreateAccountClick: () -> Unit
+) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
+    ObserveAsEvents(viewModel.events) { event ->
+        when(event) {
+            LoginEvent.LoginSuccess -> TODO()
+            LoginEvent.SignupSuccess -> TODO()
+        }
+    }
+
+    LoginScreen(
+        uiState = state,
+        onAction = { action ->
+            when (action) {
+                is LoginAction.OnForgotPasswordClick -> onForgotPasswordClick(action.email)
+                else -> Unit
+            }
+            viewModel.onAction(action)
+        }
+    )
+}
+@Composable
+fun LoginScreen(
+    uiState: LoginState,
+    onAction: (LoginAction) -> Unit,
+) {
     Surface {
         val scrollState = rememberScrollState()
         Column(
@@ -54,6 +89,11 @@ fun LoginScreen() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+
+            if (uiState.isLoading) {
+                CircularProgressIndicator()
+            }
+
             Text(
                 text = "Welcome to WorldWideAuto",
                 style = MaterialTheme.typography.headlineMedium
@@ -93,7 +133,12 @@ fun LoginScreen() {
                 text = "Forgot Password?",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { /* TODO: Handle Forgot Password */ }
+                    .clickable (
+                        onClick = {
+                            onAction(LoginAction.OnForgotPasswordClick(email = email))
+                        },
+                        enabled = !uiState.isLoading
+                    )
                     .padding(top = 16.dp),
                 textAlign = TextAlign.End,
                 style = MaterialTheme.typography.bodyMedium
@@ -106,17 +151,33 @@ fun LoginScreen() {
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 Button(
-                    onClick = { },
+                    onClick = {
+                        onAction(
+                            LoginAction.SignupWithEmail(
+                                email = email,
+                                password = password
+                            )
+                        )
+                    },
                     shape = RoundedCornerShape(50),
-                    modifier = Modifier.weight(1f).padding(end = 8.dp)
+                    modifier = Modifier.weight(1f).padding(end = 8.dp),
+                    enabled = !uiState.isLoading
                 ) {
                     Text("Sign Up")
                 }
                 Button(
-                    onClick = {  },
+                    onClick = {
+                        onAction(
+                            LoginAction.LoginWithEmail(
+                                email = email,
+                                password = password
+                            )
+                        )
+                    },
                     shape = RoundedCornerShape(50),
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
-                    modifier = Modifier.weight(1f).padding(start = 8.dp)
+                    modifier = Modifier.weight(1f).padding(start = 8.dp),
+                    enabled = !uiState.isLoading
                 ) {
                     Text("Sign In")
                 }
@@ -167,11 +228,21 @@ fun LoginScreen() {
 @Preview
 @Composable
 fun LoginScreenPreviewLight() {
-    AppTheme { LoginScreen() }
+    AppTheme {
+        LoginScreen(
+            uiState = LoginState(),
+            onAction = {}
+        )
+    }
 }
 
 @Preview
 @Composable
 fun LoginScreenPreviewDark() {
-    AppTheme(darkTheme = true) { LoginScreen() }
+    AppTheme(darkTheme = true) {
+        LoginScreen(
+            uiState = LoginState(),
+            onAction = {}
+        )
+    }
 }
