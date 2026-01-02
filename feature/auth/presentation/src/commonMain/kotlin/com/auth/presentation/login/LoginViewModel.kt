@@ -31,7 +31,8 @@ class LoginViewModel(
         when (event) {
             is LoginAction.LoginWithEmail -> login(event.email, event.password)
             is LoginAction.SignupWithEmail -> signup(event.email, event.password)
-            is LoginAction.OnForgotPasswordClick -> {}
+            LoginAction.EmailChanged -> _state.update { it.copy(emailValidationError = null) }
+            else -> {}
         }
     }
 
@@ -55,6 +56,7 @@ class LoginViewModel(
             runCatching { action() }
                 .onSuccess {
                     _state.update { it.copy(isLoading = false) }
+                    eventChannel.send(LoginEvent.LoginSuccess)
                 }
                 .onFailure { throwable ->
                     _state.update {

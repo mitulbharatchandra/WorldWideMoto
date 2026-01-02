@@ -13,4 +13,8 @@ sealed interface LoginAction {
     data class OnForgotPasswordClick(
         val email: String? = null
     ) : LoginAction
+
+    data object OnSigInWithPhoneClick : LoginAction
+
+    data object EmailChanged : LoginAction
 }
