@@ -2,7 +2,9 @@ package com.auth.presentation.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.auth.domain.model.Email
 import com.auth.domain.model.EmailValidationError
+import com.auth.domain.model.Password
 import com.auth.domain.model.PasswordValidationError
 import com.auth.domain.usecases.GetCurrentUser
 import com.auth.domain.usecases.LoginWithEmail
@@ -27,11 +29,48 @@ class LoginViewModel(
     private val eventChannel = Channel<LoginEvent>()
     val events = eventChannel.receiveAsFlow()
 
+    fun onEmailChanged(email: String) {
+        _state.update {
+            it.copy(
+                emailText = email,
+                emailValidationError = validateEmail(email),
+                authError = null
+            )
+        }
+    }
+
+    fun onPasswordChanged(password: String) {
+        _state.update {
+            it.copy(
+                passwordText = password,
+                passwordValidationError = validatePassword(password),
+                authError = null
+            )
+        }
+    }
+
+    private fun validateEmail(email: String): EmailValidationError? =
+        try {
+            Email.create(email)
+            null
+        } catch (e: EmailValidationError) {
+            e
+        }
+
+    private fun validatePassword(password: String): PasswordValidationError? =
+        try {
+            Password.create(password)
+            null
+        } catch (e: PasswordValidationError) {
+            e
+        }
+
     fun onAction(event: LoginAction) {
         when (event) {
             is LoginAction.LoginWithEmail -> login(event.email, event.password)
             is LoginAction.SignupWithEmail -> signup(event.email, event.password)
-            LoginAction.EmailChanged -> _state.update { it.copy(emailValidationError = null) }
+            is LoginAction.EmailChanged -> onEmailChanged(event.email)
+            is LoginAction.PasswordChanged -> onPasswordChanged(event.password)
             else -> {}
         }
     }

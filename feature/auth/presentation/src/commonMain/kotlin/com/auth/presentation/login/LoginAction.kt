@@ -16,5 +16,6 @@ sealed interface LoginAction {
 
     data object OnSigInWithPhoneClick : LoginAction
 
-    data object EmailChanged : LoginAction
+    data class EmailChanged(val email: String) : LoginAction
+    data class PasswordChanged(val password: String) : LoginAction
 }
