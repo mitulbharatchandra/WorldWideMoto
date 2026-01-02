@@ -1,6 +1,6 @@
 package com.worldwidemoto
-import androidx.compose.runtime.*
-import com.auth.presentation.login.LoginScreen
+import androidx.compose.runtime.Composable
+import com.auth.presentation.login.LoginRoot
 import com.kmp.designsystem.theme.AppTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -8,7 +8,11 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Preview
 fun App() {
     AppTheme {
-        LoginScreen()
+        LoginRoot(
+            onLoginSuccess = {},
+            onForgotPasswordClick = {},
+            onCreateAccountClick = {}
+        )
         /*var showContent by remember { mutableStateOf(false) }
         Column(
             modifier = Modifier

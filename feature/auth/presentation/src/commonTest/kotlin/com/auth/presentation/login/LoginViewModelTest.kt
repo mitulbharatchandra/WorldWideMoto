@@ -54,8 +54,8 @@ class LoginViewModelTest {
 
     @Test
     fun login_sets_loading_and_clears_on_success() = runTest {
-        viewModel.onEvent(
-            LoginUIEvent.LoginWithEmail(
+        viewModel.onAction(
+            LoginAction.LoginWithEmail(
                 email = "user@example.com",
                 password = "StrongPass1"
             )
@@ -71,8 +71,8 @@ class LoginViewModelTest {
 
     @Test
     fun signup_sets_loading_and_clears_on_success() = runTest {
-        viewModel.onEvent(
-            LoginUIEvent.signupWithEmail(
+        viewModel.onAction(
+            LoginAction.SignupWithEmail(
                 email = "user@example.com",
                 password = "StrongPass1"
             )
@@ -88,8 +88,8 @@ class LoginViewModelTest {
 
     @Test
     fun email_validation_error_is_exposed_in_state() = runTest {
-        viewModel.onEvent(
-            LoginUIEvent.LoginWithEmail(
+        viewModel.onAction(
+            LoginAction.LoginWithEmail(
                 email = "bad",
                 password = "StrongPass1"
             )
@@ -106,8 +106,8 @@ class LoginViewModelTest {
     fun password_validation_error_is_exposed_in_state() = runTest {
         val authError = PasswordValidationError.InvalidPassword(passwordValidationState = null)
         fakeRepository.shouldThrow = authError
-        viewModel.onEvent(
-            LoginUIEvent.LoginWithEmail(
+        viewModel.onAction(
+            LoginAction.LoginWithEmail(
                 email = "user@example.com",
                 password = "weak"
             )
@@ -124,8 +124,8 @@ class LoginViewModelTest {
     fun auth_error_is_exposed_in_state() = runTest {
         val authError = AuthError.WrongPassword
         fakeRepository.shouldThrow = authError
-        viewModel.onEvent(
-            LoginUIEvent.LoginWithEmail(
+        viewModel.onAction(
+            LoginAction.LoginWithEmail(
                 email = "user@example.com",
                 password = "StrongPass1"
             )
@@ -142,8 +142,8 @@ class LoginViewModelTest {
     fun generic_throwable_is_exposed_in_state() = runTest {
         val exception = RuntimeException("Boom")
         fakeRepository.shouldThrow = exception
-        viewModel.onEvent(
-            LoginUIEvent.LoginWithEmail(
+        viewModel.onAction(
+            LoginAction.LoginWithEmail(
                 email = "user@example.com",
                 password = "StrongPass1"
             )
@@ -160,15 +160,15 @@ class LoginViewModelTest {
     fun second_action_is_ignored_while_loading() = runTest {
         // Suspend forever to simulate long-running call
 
-        viewModel.onEvent(
-            LoginUIEvent.LoginWithEmail(
+        viewModel.onAction(
+            LoginAction.LoginWithEmail(
                 email = "user@example.com",
                 password = "StrongPass1"
             )
         )
 
-        viewModel.onEvent(
-            LoginUIEvent.LoginWithEmail(
+        viewModel.onAction(
+            LoginAction.LoginWithEmail(
                 email = "user2@example.com",
                 password = "StrongPass1"
             )

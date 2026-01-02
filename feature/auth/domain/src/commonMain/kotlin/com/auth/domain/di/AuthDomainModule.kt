@@ -5,12 +5,19 @@ import com.auth.domain.usecases.LoginWithEmail
 import com.auth.domain.usecases.LoginWithGoogle
 import com.auth.domain.usecases.LoginWithPhone
 import com.auth.domain.usecases.Logout
+import com.auth.domain.usecases.Signup
 import org.koin.dsl.module
 
 val authDomainModule = module {
 
     factory {
         LoginWithEmail(
+            repository = get()
+        )
+    }
+
+    factory {
+        Signup(
             repository = get()
         )
     }

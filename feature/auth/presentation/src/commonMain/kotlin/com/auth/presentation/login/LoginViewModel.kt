@@ -8,8 +8,10 @@ import com.auth.domain.usecases.GetCurrentUser
 import com.auth.domain.usecases.LoginWithEmail
 import com.auth.domain.usecases.Signup
 import com.kmp.auth.api.model.AuthError
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -22,10 +24,14 @@ class LoginViewModel(
     private val _state = MutableStateFlow(LoginState())
     val state = _state.asStateFlow()
 
-    fun onEvent(event: LoginUIEvent) {
+    private val eventChannel = Channel<LoginEvent>()
+    val events = eventChannel.receiveAsFlow()
+
+    fun onAction(event: LoginAction) {
         when (event) {
-            is LoginUIEvent.LoginWithEmail -> login(event.email, event.password)
-            is LoginUIEvent.signupWithEmail -> signup(event.email, event.password)
+            is LoginAction.LoginWithEmail -> login(event.email, event.password)
+            is LoginAction.SignupWithEmail -> signup(event.email, event.password)
+            is LoginAction.OnForgotPasswordClick -> {}
         }
     }
 
