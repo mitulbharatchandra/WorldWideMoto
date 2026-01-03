@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="welcome_to_world_wide_auto">Welcome to World Wide Auto!</string>
+    <string name="password_must_contain_at_least_one_uppercase_letter">Password must contain at least one uppercase letter</string>
+    <string name="password_must_contain_at_least_one_lowercase_letter">Password must contain at least one lowercase letter</string>
+    <string name="password_must_contain_at_least_one_number">Password must contain at least one number</string>
+    <string name="password_must_be_at_least_9_characters">Password must be at least 9 characters long</string>
+    <string name="invalid_password">Invalid Password</string>
+    <string name="auth_error_invalid_email">Email address not found</string>
+    <string name="auth_error_wrong_password">Incorrect password</string>
+    <string name="auth_error_user_not_found">User not found</string>
+    <string name="auth_error_email_already_in_use">Email already in use</string>
+    <string name="auth_error_weak_password">Password is too weak</string>
+    <string name="auth_error_network">Network error. Please try again.</string>
+    <string name="auth_error_too_many_requests">Too many attempts. Try again later.</string>
+    <string name="auth_error_invalid_action_code">Invalid or expired action</string>
+    <string name="auth_error_recent_login_required">Please re-login to continue</string>
+    <string name="auth_error_invalid_credentials">Invalid credentials</string>
+    <string name="auth_error_multi_factor_required">Additional verification required</string>
+    <string name="auth_error_unknown">Something went wrong</string>
+</resources>

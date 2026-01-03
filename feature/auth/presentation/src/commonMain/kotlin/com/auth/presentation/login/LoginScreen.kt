@@ -41,10 +41,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.auth.presentation.common.AuthErrorText
+import com.auth.presentation.common.PasswordErrorText
 import com.core.presentation.util.ObserveAsEvents
 import com.kmp.designsystem.theme.AppTheme
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import worldwidemoto.feature.auth.presentation.generated.resources.Res
+import worldwidemoto.feature.auth.presentation.generated.resources.welcome_to_world_wide_auto
 
 
 @Composable
@@ -96,7 +101,7 @@ fun LoginScreen(
             }
 
             Text(
-                text = "Welcome to WorldWideAuto",
+                text = stringResource(Res.string.welcome_to_world_wide_auto),
                 style = MaterialTheme.typography.headlineMedium
             )
             Text(
@@ -107,26 +112,22 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
+            AuthErrorText(
+                error = uiState.authError,
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.height(8.dp))
             var email by remember { mutableStateOf("") }
             OutlinedTextField(
                 value = email,
                 onValueChange = {
                     email = it
-                    onAction(LoginAction.EmailChanged)
+                    onAction(LoginAction.EmailChanged(it))
                 },
                 label = { Text("Email address") },
                 leadingIcon = { Icon(Icons.Filled.Email, contentDescription = "Email Icon") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                modifier = Modifier.fillMaxWidth(),
-                isError = uiState.emailValidationError != null,
-                supportingText = uiState.emailValidationError?.let {
-                    {
-                        Text(
-                            text = "Invalid Email Address",
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
-                    }
-                }
+                modifier = Modifier.fillMaxWidth()
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -134,12 +135,20 @@ fun LoginScreen(
             var password by remember { mutableStateOf("") }
             OutlinedTextField(
                 value = password,
-                onValueChange = { password = it },
+                onValueChange = {
+                    password = it
+                    onAction(LoginAction.PasswordChanged(it))
+                },
                 label = { Text("Password") },
                 leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = "Password Icon") },
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                supportingText = {
+                    PasswordErrorText(
+                        error = uiState.passwordValidationError
+                    )
+                }
             )
 
             Text(
@@ -174,7 +183,7 @@ fun LoginScreen(
                     },
                     shape = RoundedCornerShape(50),
                     modifier = Modifier.weight(1f).padding(end = 8.dp),
-                    enabled = !uiState.isLoading
+                    enabled = uiState.canSubmit
                 ) {
                     Text("Sign Up")
                 }
@@ -190,7 +199,7 @@ fun LoginScreen(
                     shape = RoundedCornerShape(50),
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                     modifier = Modifier.weight(1f).padding(start = 8.dp),
-                    enabled = !uiState.isLoading
+                    enabled = uiState.canSubmit
                 ) {
                     Text("Sign In")
                 }
