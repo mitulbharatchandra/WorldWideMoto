@@ -5,6 +5,7 @@ import com.kmp.auth.api.AuthService
 import com.kmp.auth.api.model.AuthCredentials
 import com.kmp.auth.api.model.AuthError
 import com.kmp.auth.api.model.AuthUser
+import com.worldwidemoto.firebase.auth.mappers.toAuthError
 import com.worldwidemoto.firebase.auth.mappers.toAuthUser
 import kotlinx.coroutines.tasks.await
 

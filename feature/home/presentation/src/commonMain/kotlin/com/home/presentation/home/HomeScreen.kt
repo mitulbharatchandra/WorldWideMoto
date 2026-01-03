@@ -44,7 +44,6 @@ fun HomeScreenRoot(
                 },
                 shape = RoundedCornerShape(50),
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
-                modifier = Modifier.weight(1f).padding(start = 8.dp)
             ) {
                 Text("Sign Out")
             }

@@ -41,6 +41,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.auth.presentation.common.AuthErrorText
 import com.auth.presentation.common.PasswordErrorText
 import com.core.presentation.util.ObserveAsEvents
 import com.kmp.designsystem.theme.AppTheme
@@ -111,6 +112,11 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
+            AuthErrorText(
+                error = uiState.authError,
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.height(8.dp))
             var email by remember { mutableStateOf("") }
             OutlinedTextField(
                 value = email,

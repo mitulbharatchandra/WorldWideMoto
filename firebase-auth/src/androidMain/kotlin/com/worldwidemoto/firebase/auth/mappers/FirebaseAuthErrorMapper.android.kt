@@ -1,4 +1,4 @@
-package com.worldwidemoto.firebase.auth
+package com.worldwidemoto.firebase.auth.mappers
 
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuthException
@@ -13,7 +13,7 @@ internal fun Throwable.toAuthError(): AuthError =
                 "ERROR_INVALID_EMAIL" -> AuthError.InvalidEmail
                 "ERROR_WRONG_PASSWORD" -> AuthError.WrongPassword
                 "ERROR_WEAK_PASSWORD" -> AuthError.WeakPassword
-                else -> AuthError.InvalidEmail
+                else -> AuthError.InvalidCredentials
             }
         }
 
