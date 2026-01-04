@@ -63,6 +63,8 @@ kotlin {
                 // Add KMP dependencies here
                 implementation(projects.feature.auth.domain)
                 implementation(projects.kmpAuthApi)
+                implementation(projects.googleSignIn)
+
                 implementation(libs.koin.core)
             }
         }

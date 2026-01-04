@@ -4,12 +4,14 @@ import com.auth.domain.di.authDomainModule
 import com.auth.presentation.di.authPresentationModule
 import com.firebase.core.di.FirebaseInitializer
 import com.firebase.core.di.firebaseCoreModule
+import com.google.sigin.di.signInWithGoogleModule
 import com.worldwidemoto.firebase.auth.di.firebaseAuthModule
 import org.koin.core.annotation.Configuration
 import org.koin.core.annotation.KoinApplication
 import org.koin.core.annotation.Module
 import org.koin.dsl.KoinAppDeclaration
-import org.koin.ksp.generated.*
+import org.koin.ksp.generated.module
+import org.koin.ksp.generated.startKoin
 import org.koin.mp.KoinPlatform
 
 @Configuration
@@ -27,7 +29,8 @@ fun initKoinMitul(configuration : KoinAppDeclaration? = null) {
             firebaseAuthModule,
             authDomainModule,
             authDataModule,
-            authPresentationModule
+            authPresentationModule,
+            signInWithGoogleModule
         )
         configuration?.invoke(this)
     }

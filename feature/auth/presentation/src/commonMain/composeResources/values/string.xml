@@ -18,4 +18,5 @@
     <string name="auth_error_invalid_credentials">Invalid credentials</string>
     <string name="auth_error_multi_factor_required">Additional verification required</string>
     <string name="auth_error_unknown">Something went wrong</string>
+    <string name="web_client_id">1032867143346-33mjdai9lqeifhfj1g6fj20mpds90fvg.apps.googleusercontent.com</string>
 </resources>

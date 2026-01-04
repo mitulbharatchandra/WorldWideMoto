@@ -1,6 +1,7 @@
 package com.worldwidemoto.firebase.auth
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.kmp.auth.api.AuthService
 import com.kmp.auth.api.model.AuthCredentials
 import com.kmp.auth.api.model.AuthError
@@ -17,7 +18,6 @@ actual class FirebaseAuthService: AuthService {
     override suspend fun signIn(credentials: AuthCredentials): AuthUser {
         return try {
             when (credentials) {
-
                 AuthCredentials.Anonymous -> {
                     val result = auth.signInAnonymously().await()
                     val user = result.user
@@ -66,8 +66,25 @@ actual class FirebaseAuthService: AuthService {
         TODO("Not yet implemented")
     }
 
+    override suspend fun loginWithGoogle(idToken: String): AuthUser {
+        return try {
+            val credentials = GoogleAuthProvider.getCredential(idToken, null)
+            val result = auth
+                .signInWithCredential(credentials)
+                .await()
+
+            val user = result.user
+                ?: throw AuthError.Unknown("Firebase returned null user")
+
+            user.toAuthUser()
+
+        } catch (e: Throwable) {
+            throw e.toAuthError()
+        }
+    }
+
     override suspend fun signOut() {
-        TODO("Not yet implemented")
+        auth.signOut()
     }
 
 }

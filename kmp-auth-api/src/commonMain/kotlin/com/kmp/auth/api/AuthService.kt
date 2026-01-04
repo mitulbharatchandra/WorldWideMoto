@@ -11,5 +11,8 @@ interface AuthService {
         password: String
     ): AuthUser
     suspend fun sendPasswordResetEmail(email: String)
+    suspend fun loginWithGoogle(
+        idToken: String
+    ): AuthUser
     suspend fun signOut()
 }

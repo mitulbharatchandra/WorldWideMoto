@@ -49,7 +49,8 @@ class FakeAuthRepository : AuthRepository {
     }
 
     override suspend fun loginWithGoogle(
-        idToken: String
+        webClientId: String,
+        authorizedAccounts: Boolean
     ): AuthUser {
         val user = AuthUser(
             id = "google_user",

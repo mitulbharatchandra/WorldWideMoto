@@ -14,6 +14,7 @@ sealed interface LoginAction {
         val email: String? = null
     ) : LoginAction
 
+    data class OnLoginWithGoogleClick(val webClientId: String) : LoginAction
     data object OnSigInWithPhoneClick : LoginAction
 
     data class EmailChanged(val email: String) : LoginAction

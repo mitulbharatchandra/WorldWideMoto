@@ -1,12 +1,15 @@
 package com.auth.data.repository
 
 import com.auth.domain.repository.AuthRepository
+import com.google.sigin.SignInGoogleProvider
+import com.google.sigin.model.GoogleSignInError
 import com.kmp.auth.api.AuthService
 import com.kmp.auth.api.model.AuthCredentials
 import com.kmp.auth.api.model.AuthUser
 
 class AuthRepositoryImpl(
-    private val authService: AuthService
+    private val authService: AuthService,
+    private val signInGoogleProvider: SignInGoogleProvider,
 ) : AuthRepository {
     override suspend fun loginWithEmail(
         email: String,
@@ -39,12 +42,30 @@ class AuthRepositoryImpl(
     }
 
     override suspend fun loginWithGoogle(
-        idToken: String
+        webClientId: String,
+        authorizedAccounts: Boolean
     ): AuthUser {
-        // Google auth will be added later
-        throw UnsupportedOperationException(
-            "Google auth not implemented yet"
-        )
+        return try {
+            val user = signInGoogleProvider.signInWithGoogle(
+                clientId = webClientId,
+                authorizedAccounts = authorizedAccounts
+            )
+
+            authService.loginWithGoogle(user.idToken)
+        } catch (throwable: Throwable) {
+            if (
+                throwable is GoogleSignInError.NoCredentialException &&
+                authorizedAccounts
+            ) {
+                // Retry with non-authorized accounts
+                loginWithGoogle(
+                    webClientId = webClientId,
+                    authorizedAccounts = false
+                )
+            } else {
+                throw throwable
+            }
+        }
     }
 
     override suspend fun getCurrentUser(): AuthUser? =

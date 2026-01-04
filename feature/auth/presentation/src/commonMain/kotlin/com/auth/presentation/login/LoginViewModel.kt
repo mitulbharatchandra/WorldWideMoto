@@ -8,6 +8,7 @@ import com.auth.domain.model.Password
 import com.auth.domain.model.PasswordValidationError
 import com.auth.domain.usecases.GetCurrentUser
 import com.auth.domain.usecases.LoginWithEmail
+import com.auth.domain.usecases.LoginWithGoogle
 import com.auth.domain.usecases.Signup
 import com.kmp.auth.api.model.AuthError
 import kotlinx.coroutines.channels.Channel
@@ -20,6 +21,7 @@ import kotlinx.coroutines.launch
 class LoginViewModel(
     private val loginWithEmail: LoginWithEmail,
     private val signUp: Signup,
+    private val loginWithGoogle: LoginWithGoogle,
     private val getCurrentUser: GetCurrentUser,
 ): ViewModel() {
 
@@ -71,9 +73,48 @@ class LoginViewModel(
             is LoginAction.SignupWithEmail -> signup(event.email, event.password)
             is LoginAction.EmailChanged -> onEmailChanged(event.email)
             is LoginAction.PasswordChanged -> onPasswordChanged(event.password)
+            is LoginAction.OnLoginWithGoogleClick -> onLoginWithGoogle(event.webClientId)
             else -> {}
         }
     }
+
+    private fun onLoginWithGoogle(webClientId: String) {
+        executeAuthAction {
+            loginWithGoogle(webClientId = webClientId)
+        }
+    }
+
+    /*private fun onLoginWithGoogle(webClientId: String, authorizedAccounts: Boolean = true) {
+        if (_state.value.isLoading) return
+        _state.update { it.copy(isLoading = true) }
+        viewModelScope.launch {
+            runCatching {
+                signInGoogleProvider.signInWithGoogle(
+                    clientId = webClientId,
+                    authorizedAccounts = authorizedAccounts
+                )
+            }.onSuccess { googleUser ->
+                _state.update {
+                    it.copy(isLoading = false)
+                }
+                executeAuthAction {
+                    loginWithGoogle(webClientId = googleUser.idToken)
+                }
+            }.onFailure { throwable ->
+                if (throwable is GoogleSignInError.NoCredentialException) {
+                    _state.update {
+                        it.copy(isLoading = false)
+                    }
+                    onLoginWithGoogle(webClientId = webClientId, authorizedAccounts = false)
+                } else {
+                    _state.update {
+                        it.copy(throwable = throwable, isLoading = false)
+                    }
+                }
+            }
+
+        }
+    }*/
 
     private fun signup(email: String, password: String) =
         executeAuthAction {

@@ -36,7 +36,7 @@ class FakeAuthRepositoryForPresentation : AuthRepository {
         return AuthUser(id = "signup-user", phoneNumber = phoneNumber)
     }
 
-    override suspend fun loginWithGoogle(idToken: String): AuthUser {
+    override suspend fun loginWithGoogle(webClientId: String, authorizedAccounts: Boolean): AuthUser {
         signupInvoked = true
         shouldThrow?.let { throw it }
         return AuthUser(id = "signup-user")
