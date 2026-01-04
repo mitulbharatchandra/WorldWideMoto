@@ -14,21 +14,21 @@ class EmailTest {
 
     @Test
     fun email_without_at_sign_throws() {
-        assertFailsWith<IllegalArgumentException> {
+        assertFailsWith<EmailValidationError.InvalidEmail> {
             Email.create("userexample.com")
         }
     }
 
     @Test
     fun email_without_domain_throws() {
-        assertFailsWith<IllegalArgumentException> {
+        assertFailsWith<EmailValidationError.InvalidEmail> {
             Email.create("user@")
         }
     }
 
     @Test
     fun blank_email_throws() {
-        assertFailsWith<IllegalArgumentException> {
+        assertFailsWith<EmailValidationError.EmptyEmail> {
             Email.create("")
         }
     }

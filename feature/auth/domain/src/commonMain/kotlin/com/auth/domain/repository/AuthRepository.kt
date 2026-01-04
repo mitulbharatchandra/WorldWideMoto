@@ -19,7 +19,8 @@ interface AuthRepository {
     ): AuthUser
 
     suspend fun loginWithGoogle(
-        idToken: String
+        webClientId: String,
+        authorizedAccounts: Boolean = true
     ): AuthUser
 
     suspend fun getCurrentUser(): AuthUser?

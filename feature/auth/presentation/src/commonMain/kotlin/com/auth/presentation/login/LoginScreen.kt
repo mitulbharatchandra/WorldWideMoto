@@ -49,6 +49,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import worldwidemoto.feature.auth.presentation.generated.resources.Res
+import worldwidemoto.feature.auth.presentation.generated.resources.web_client_id
 import worldwidemoto.feature.auth.presentation.generated.resources.welcome_to_world_wide_auto
 
 
@@ -116,6 +117,12 @@ fun LoginScreen(
                 error = uiState.authError,
                 modifier = Modifier.fillMaxWidth()
             )
+            uiState.throwable?.let {
+                Text(
+                    text = it.message ?: "",
+                    color = MaterialTheme.colorScheme.error,
+                )
+            }
             Spacer(modifier = Modifier.height(8.dp))
             var email by remember { mutableStateOf("") }
             OutlinedTextField(
@@ -227,9 +234,9 @@ fun LoginScreen(
             )
 
             Spacer(modifier = Modifier.height(16.dp))
-
+            val webClientId = stringResource(Res.string.web_client_id)
             GoogleSignInButton(
-                onClick = {}
+                onClick = { onAction(LoginAction.OnLoginWithGoogleClick(webClientId)) }
             )
 
             Spacer(modifier = Modifier.height(16.dp))

@@ -56,6 +56,7 @@ kotlin {
             implementation(projects.feature.auth.domain)
             implementation(projects.feature.auth.data)
             implementation(projects.feature.home.presentation)
+            implementation(projects.googleSignIn)
 
             //Navigation
             implementation(libs.jetbrains.navigation3.ui)

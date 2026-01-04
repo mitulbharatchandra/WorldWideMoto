@@ -3,6 +3,7 @@ package com.auth.presentation.login
 import com.auth.domain.model.PasswordValidationError
 import com.auth.domain.usecases.GetCurrentUser
 import com.auth.domain.usecases.LoginWithEmail
+import com.auth.domain.usecases.LoginWithGoogle
 import com.auth.domain.usecases.Signup
 import com.kmp.auth.api.model.AuthError
 import kotlinx.coroutines.Dispatchers
@@ -25,6 +26,7 @@ class LoginViewModelTest {
 
     private lateinit var fakeRepository: FakeAuthRepositoryForPresentation
     private lateinit var loginWithEmail: LoginWithEmail
+    private lateinit var loginWithGoogle: LoginWithGoogle
     private lateinit var signup: Signup
     private lateinit var getCurrentUser: GetCurrentUser
     private lateinit var viewModel: LoginViewModel
@@ -36,12 +38,14 @@ class LoginViewModelTest {
     fun setup() {
         fakeRepository = FakeAuthRepositoryForPresentation()
         loginWithEmail = LoginWithEmail(fakeRepository)
+        loginWithGoogle = LoginWithGoogle(fakeRepository)
         signup = Signup(fakeRepository)
         getCurrentUser = GetCurrentUser(fakeRepository)
 
         viewModel = LoginViewModel(
             loginWithEmail = loginWithEmail,
             signUp = signup,
+            loginWithGoogle = loginWithGoogle,
             getCurrentUser = getCurrentUser
         )
         Dispatchers.setMain(testDispatcher)

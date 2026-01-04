@@ -80,6 +80,10 @@ actual class FirebaseAuthService: AuthService {
     }
 
     override suspend fun sendPasswordResetEmail(email: String) {
+
+    }
+
+    override suspend fun loginWithGoogle(idToken: String): AuthUser {
         TODO("Not yet implemented")
     }
 

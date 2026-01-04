@@ -61,6 +61,7 @@ kotlin {
                 implementation(projects.core.presentation)
                 implementation(projects.feature.auth.domain)
                 implementation(projects.kmpAuthApi)
+                implementation(projects.googleSignIn)
 
                 implementation(libs.jetbrains.navigation3.ui)
                 implementation(libs.jetbrains.lifecycle.viewmodel.nav3)

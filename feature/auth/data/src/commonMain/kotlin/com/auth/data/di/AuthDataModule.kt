@@ -8,7 +8,8 @@ val authDataModule = module {
 
     single<AuthRepository> {
         AuthRepositoryImpl(
-            authService = get()
+            authService = get(),
+            signInGoogleProvider = get()
         )
     }
 }
