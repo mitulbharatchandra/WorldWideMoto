@@ -2,6 +2,7 @@
 
 package com.worldwidemoto.firebase.auth
 import cocoapods.FirebaseAuth.FIRAuth
+import cocoapods.FirebaseAuth.FIRGoogleAuthProvider
 import com.kmp.auth.api.AuthService
 import com.kmp.auth.api.model.AuthCredentials
 import com.kmp.auth.api.model.AuthError
@@ -84,11 +85,34 @@ actual class FirebaseAuthService: AuthService {
     }
 
     override suspend fun loginWithGoogle(idToken: String): AuthUser {
-        TODO("Not yet implemented")
+        return suspendCancellableCoroutine { cont ->
+            val credentials = FIRGoogleAuthProvider.credentialWithIDToken(idToken = idToken, accessToken = "")
+            auth.signInWithCredential(
+                credential = credentials
+            ) { result, error ->
+
+                when {
+                    error != null ->
+                        cont.resumeWithException(
+                            error.toAuthError()
+                        )
+
+                    result?.user() != null ->
+                        cont.resume(result.user().toAuthUser())
+
+                    else ->
+                        cont.resumeWithException(
+                            AuthError.Unknown(
+                                "Firebase returned empty signUp result"
+                            )
+                        )
+                }
+            }
+        }
     }
 
     override suspend fun signOut() {
-        TODO("Not yet implemented")
+        auth.signOut(error = null)
     }
 
 }

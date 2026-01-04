@@ -5,6 +5,7 @@ import com.auth.presentation.di.authPresentationModule
 import com.firebase.core.di.FirebaseInitializer
 import com.firebase.core.di.firebaseCoreModule
 import com.google.sigin.di.signInWithGoogleModule
+import com.home.presentation.di.homePresentationModule
 import com.worldwidemoto.firebase.auth.di.firebaseAuthModule
 import org.koin.core.annotation.Configuration
 import org.koin.core.annotation.KoinApplication
@@ -30,7 +31,8 @@ fun initKoinMitul(configuration : KoinAppDeclaration? = null) {
             authDomainModule,
             authDataModule,
             authPresentationModule,
-            signInWithGoogleModule
+            signInWithGoogleModule,
+            homePresentationModule
         )
         configuration?.invoke(this)
     }

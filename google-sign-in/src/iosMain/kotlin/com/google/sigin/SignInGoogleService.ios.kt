@@ -43,6 +43,6 @@ actual class SignInGoogleProvider() {
     }
 
     actual suspend fun signOut() {
-
+        GIDSignIn.sharedInstance.signOut()
     }
 }

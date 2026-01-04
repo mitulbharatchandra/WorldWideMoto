@@ -84,38 +84,6 @@ class LoginViewModel(
         }
     }
 
-    /*private fun onLoginWithGoogle(webClientId: String, authorizedAccounts: Boolean = true) {
-        if (_state.value.isLoading) return
-        _state.update { it.copy(isLoading = true) }
-        viewModelScope.launch {
-            runCatching {
-                signInGoogleProvider.signInWithGoogle(
-                    clientId = webClientId,
-                    authorizedAccounts = authorizedAccounts
-                )
-            }.onSuccess { googleUser ->
-                _state.update {
-                    it.copy(isLoading = false)
-                }
-                executeAuthAction {
-                    loginWithGoogle(webClientId = googleUser.idToken)
-                }
-            }.onFailure { throwable ->
-                if (throwable is GoogleSignInError.NoCredentialException) {
-                    _state.update {
-                        it.copy(isLoading = false)
-                    }
-                    onLoginWithGoogle(webClientId = webClientId, authorizedAccounts = false)
-                } else {
-                    _state.update {
-                        it.copy(throwable = throwable, isLoading = false)
-                    }
-                }
-            }
-
-        }
-    }*/
-
     private fun signup(email: String, password: String) =
         executeAuthAction {
             signUp(email, password)
