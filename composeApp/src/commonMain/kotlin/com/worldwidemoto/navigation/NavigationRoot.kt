@@ -18,7 +18,8 @@ import kotlinx.serialization.modules.polymorphic
 
 @Composable
 fun NavigationRoot(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    startDestination: NavKey
 ) {
     val rootBackStack = rememberNavBackStack(
         configuration = SavedStateConfiguration {
@@ -29,7 +30,7 @@ fun NavigationRoot(
                 }
             }
         },
-        AuthRoute
+        startDestination
     )
     NavDisplay(
         modifier = modifier,
