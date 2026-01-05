@@ -26,6 +26,7 @@ fun initKoinMitul(configuration : KoinAppDeclaration? = null) {
     KoinApp.startKoin {
         modules(
             AppModule().module,
+            mainAppModule,
             firebaseCoreModule,
             firebaseAuthModule,
             authDomainModule,

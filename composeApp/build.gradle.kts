@@ -48,6 +48,7 @@ kotlin {
 
             api(libs.koin.core)
             api(libs.koin.annotations)
+            implementation(libs.koin.compose.viewmodel)
 
             implementation(projects.firebaseCore)
             implementation(projects.firebaseAuth)
@@ -57,6 +58,7 @@ kotlin {
             implementation(projects.feature.auth.data)
             implementation(projects.feature.home.presentation)
             implementation(projects.googleSignIn)
+            implementation(projects.kmpAuthApi)
 
             //Navigation
             implementation(libs.jetbrains.navigation3.ui)
