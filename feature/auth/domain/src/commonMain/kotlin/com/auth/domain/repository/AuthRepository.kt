@@ -23,6 +23,8 @@ interface AuthRepository {
         authorizedAccounts: Boolean = true
     ): AuthUser
 
+    suspend fun loginWithApple(): AuthUser
+
     suspend fun getCurrentUser(): AuthUser?
 
     suspend fun logout()

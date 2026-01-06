@@ -1,6 +1,7 @@
 package com.auth.domain.di
 
 import com.auth.domain.usecases.GetCurrentUser
+import com.auth.domain.usecases.LoginWithApple
 import com.auth.domain.usecases.LoginWithEmail
 import com.auth.domain.usecases.LoginWithGoogle
 import com.auth.domain.usecases.LoginWithPhone
@@ -30,6 +31,12 @@ val authDomainModule = module {
 
     factory {
         LoginWithGoogle(
+            repository = get()
+        )
+    }
+
+    factory {
+        LoginWithApple(
             repository = get()
         )
     }

@@ -41,6 +41,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.apple.signin.AppleSignInButton
 import com.auth.presentation.common.AuthErrorText
 import com.auth.presentation.common.PasswordErrorText
 import com.core.presentation.util.ObserveAsEvents
@@ -228,11 +229,13 @@ fun LoginScreen(
             }
 
             Spacer(modifier = Modifier.height(16.dp))
-
             AppleSignInButton(
-                onClick = {}
-            )
-
+                onResult = {}
+            ) { onClick ->
+                AppleSignInButtonDesign(
+                    onClick = onClick
+                )
+            }
             Spacer(modifier = Modifier.height(16.dp))
             val webClientId = stringResource(Res.string.web_client_id)
             GoogleSignInButton(
