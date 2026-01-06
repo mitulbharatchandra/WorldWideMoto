@@ -1,5 +1,7 @@
 package com.auth.presentation.login
 
+import com.apple.signin.model.AppleSignInResult
+
 sealed interface LoginAction {
     data class LoginWithEmail(
         val email: String,
@@ -15,6 +17,7 @@ sealed interface LoginAction {
     ) : LoginAction
 
     data class OnLoginWithGoogleClick(val webClientId: String) : LoginAction
+    data class OnAppleSignInResult(val appleSignInResult: AppleSignInResult) : LoginAction
     data object OnSigInWithPhoneClick : LoginAction
 
     data class EmailChanged(val email: String) : LoginAction

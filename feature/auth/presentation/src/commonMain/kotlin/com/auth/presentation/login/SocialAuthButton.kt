@@ -107,7 +107,7 @@ fun GoogleSignInButton(
 }
 
 @Composable
-fun AppleSignInButton(
+fun AppleSignInButtonDesign(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     isDark: Boolean = isSystemInDarkTheme()
@@ -188,7 +188,7 @@ fun GoogleSignInButtonPreview() {
 @Composable
 @Preview
 fun AppleSignInButtonPreview() {
-    AppleSignInButton(onClick = {})
+    AppleSignInButtonDesign(onClick = {})
 }
 
 @Composable

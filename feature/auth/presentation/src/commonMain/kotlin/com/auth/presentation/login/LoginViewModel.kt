@@ -2,11 +2,13 @@ package com.auth.presentation.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.apple.signin.model.AppleSignInResult
 import com.auth.domain.model.Email
 import com.auth.domain.model.EmailValidationError
 import com.auth.domain.model.Password
 import com.auth.domain.model.PasswordValidationError
 import com.auth.domain.usecases.GetCurrentUser
+import com.auth.domain.usecases.LoginWithApple
 import com.auth.domain.usecases.LoginWithEmail
 import com.auth.domain.usecases.LoginWithGoogle
 import com.auth.domain.usecases.Signup
@@ -22,6 +24,7 @@ class LoginViewModel(
     private val loginWithEmail: LoginWithEmail,
     private val signUp: Signup,
     private val loginWithGoogle: LoginWithGoogle,
+    private val loginWithApple: LoginWithApple,
     private val getCurrentUser: GetCurrentUser,
 ): ViewModel() {
 
@@ -74,7 +77,22 @@ class LoginViewModel(
             is LoginAction.EmailChanged -> onEmailChanged(event.email)
             is LoginAction.PasswordChanged -> onPasswordChanged(event.password)
             is LoginAction.OnLoginWithGoogleClick -> onLoginWithGoogle(event.webClientId)
+            is LoginAction.OnAppleSignInResult -> onAppleSignInResult(event.appleSignInResult)
             else -> {}
+        }
+    }
+
+    private fun onAppleSignInResult(result: AppleSignInResult) {
+        when (result) {
+            is AppleSignInResult.Success -> {
+                // Send token to Firebase / backend
+            }
+            AppleSignInResult.Cancelled -> {
+                // Ignore
+            }
+            is AppleSignInResult.Failure -> {
+                // Show error
+            }
         }
     }
 

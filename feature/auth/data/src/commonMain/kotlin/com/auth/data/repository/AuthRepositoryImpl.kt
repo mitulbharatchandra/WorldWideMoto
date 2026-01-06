@@ -1,5 +1,4 @@
 package com.auth.data.repository
-
 import com.auth.domain.repository.AuthRepository
 import com.google.sigin.SignInGoogleProvider
 import com.google.sigin.model.GoogleSignInError
@@ -9,7 +8,7 @@ import com.kmp.auth.api.model.AuthUser
 
 class AuthRepositoryImpl(
     private val authService: AuthService,
-    private val signInGoogleProvider: SignInGoogleProvider,
+    private val signInGoogleProvider: SignInGoogleProvider
 ) : AuthRepository {
     override suspend fun loginWithEmail(
         email: String,
@@ -68,9 +67,17 @@ class AuthRepositoryImpl(
         }
     }
 
+    override suspend fun loginWithApple(): AuthUser {
+        throw UnsupportedOperationException(
+            "Phone auth not implemented yet"
+        )
+    }
+
     override suspend fun getCurrentUser(): AuthUser? =
         authService.getCurrentUser()
 
-    override suspend fun logout() =
+    override suspend fun logout() {
         authService.signOut()
+        signInGoogleProvider.signOut()
+    }
 }

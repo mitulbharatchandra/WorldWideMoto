@@ -35,6 +35,7 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             api(libs.koin.android)
+            implementation(libs.koin.androidx.compose)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -58,6 +59,7 @@ kotlin {
             implementation(projects.feature.auth.data)
             implementation(projects.feature.home.presentation)
             implementation(projects.googleSignIn)
+            implementation(projects.appleSignIn)
             implementation(projects.kmpAuthApi)
 
             //Navigation
