@@ -13,6 +13,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,6 +21,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
+import androidx.navigationevent.NavigationEventDispatcher
+import androidx.navigationevent.NavigationEventDispatcherOwner
+import androidx.navigationevent.compose.LocalNavigationEventDispatcherOwner
 import androidx.savedstate.serialization.SavedStateConfiguration
 import com.core.presentation.util.navigation.BottomNavItem
 import com.core.presentation.util.navigation.BottomNavigationAppBar
@@ -29,6 +33,7 @@ import com.core.presentation.util.navigation.toEntries
 import com.home.presentation.home.HomeScreenRoot
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun HomeNavigation(
@@ -115,6 +120,36 @@ fun HomeNavigation(
         )
     }
 }
+
+@Composable
+@Preview
+fun HomeNavigationPreview() {
+    PreviewNavWrapper {
+        HomeNavigation(
+            onSignOutSuccess = {}
+        )
+    }
+}
+
+@Composable
+private fun PreviewNavWrapper(
+    content: @Composable () -> Unit
+) {
+    CompositionLocalProvider(
+        LocalNavigationEventDispatcherOwner provides
+                FakeNavigationEventDispatcherOwner()
+    ) {
+        content()
+    }
+}
+
+class FakeNavigationEventDispatcherOwner :
+    NavigationEventDispatcherOwner {
+
+    override val navigationEventDispatcher =
+        NavigationEventDispatcher()
+}
+
 
 val HOME_DESTINATIONS = mapOf(
     HomeRoute.Garages to BottomNavItem(
