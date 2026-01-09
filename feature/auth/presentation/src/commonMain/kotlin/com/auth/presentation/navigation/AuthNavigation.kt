@@ -1,5 +1,7 @@
 package com.auth.presentation.navigation
 
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
@@ -32,33 +34,37 @@ fun AuthNavigation(
         },
         AuthRoute.Login
     )
-    NavDisplay(
-        backStack = authBackStack,
-        modifier = modifier,
-        entryDecorators = listOf(
-            rememberSaveableStateHolderNavEntryDecorator(),
-            rememberViewModelStoreNavEntryDecorator()
-        ),
-        entryProvider = entryProvider {
-            entry<AuthRoute.Login> {
-                LoginRoot(
-                    onLoginSuccess = onLoginSuccess,
-                    onForgotPasswordClick = {
-                        authBackStack.add(
-                            AuthRoute.ForgotPassword(email = it)
-                        )
-                    },
-                    onSigInWithPhoneClick = {
-                        authBackStack.add(AuthRoute.SignInWithPhone)
-                    }
-                )
+    Scaffold(
+        modifier = modifier
+    ) { innerPadding ->
+        NavDisplay(
+            backStack = authBackStack,
+            modifier = Modifier.padding(innerPadding),
+            entryDecorators = listOf(
+                rememberSaveableStateHolderNavEntryDecorator(),
+                rememberViewModelStoreNavEntryDecorator()
+            ),
+            entryProvider = entryProvider {
+                entry<AuthRoute.Login> {
+                    LoginRoot(
+                        onLoginSuccess = onLoginSuccess,
+                        onForgotPasswordClick = {
+                            authBackStack.add(
+                                AuthRoute.ForgotPassword(email = it)
+                            )
+                        },
+                        onSigInWithPhoneClick = {
+                            authBackStack.add(AuthRoute.SignInWithPhone)
+                        }
+                    )
+                }
+                entry<AuthRoute.ForgotPassword> { key ->
+                    ForgetPasswordRoot(email = key.email)
+                }
+                entry<AuthRoute.SignInWithPhone> {
+                    SignInWithPhoneRoot()
+                }
             }
-            entry<AuthRoute.ForgotPassword> { key ->
-                ForgetPasswordRoot(email = key.email)
-            }
-            entry<AuthRoute.SignInWithPhone> {
-                SignInWithPhoneRoot()
-            }
-        }
-    )
+        )
+    }
 }

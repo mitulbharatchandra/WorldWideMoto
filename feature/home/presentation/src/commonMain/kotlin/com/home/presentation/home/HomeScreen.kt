@@ -51,7 +51,7 @@ fun HomeScreenRoot(
                 CircularProgressIndicator()
             }
             Text(
-                text = "Home Screen",
+                text = "History",
                 style = MaterialTheme.typography.headlineMedium
             )
 

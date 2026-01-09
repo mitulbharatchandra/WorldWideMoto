@@ -6,5 +6,14 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object HomeRoute: NavKey {
     @Serializable
-    data object Home: NavKey
+    data object Garages: NavKey
+
+    @Serializable
+    data object GarageDetail: NavKey
+
+    @Serializable
+    data object Map: NavKey
+
+    @Serializable
+    data object History: NavKey
 }
