@@ -72,6 +72,8 @@ kotlin {
                 implementation(compose.components.uiToolingPreview)
                 implementation(libs.androidx.lifecycle.viewmodelCompose)
                 implementation(libs.androidx.lifecycle.runtimeCompose)
+                implementation(libs.coil.compose)
+                implementation(libs.coil.network)
 
                 implementation(libs.jetbrains.navigation3.ui)
                 implementation(libs.jetbrains.lifecycle.viewmodel.nav3)
@@ -89,6 +91,7 @@ kotlin {
                 // Add Android-specific dependencies here. Note that this source set depends on
                 // commonMain by default and will correctly pull the Android artifacts of any KMP
                 // dependencies declared in commonMain.
+                implementation(libs.coil.android)
             }
         }
 
@@ -107,6 +110,7 @@ kotlin {
                 // part of KMP’s default source set hierarchy. Note that this source set depends
                 // on common by default and will correctly pull the iOS artifacts of any
                 // KMP dependencies declared in commonMain.
+                implementation(libs.coil.ktor.client.darwin)
             }
         }
     }

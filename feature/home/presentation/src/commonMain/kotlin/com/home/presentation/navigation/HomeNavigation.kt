@@ -1,15 +1,12 @@
 package com.home.presentation.navigation
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Garage
 import androidx.compose.material.icons.outlined.History
 import androidx.compose.material.icons.outlined.Map
-import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,7 +14,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
@@ -30,6 +26,8 @@ import com.core.presentation.util.navigation.BottomNavigationAppBar
 import com.core.presentation.util.navigation.Navigator
 import com.core.presentation.util.navigation.rememberNavigationState
 import com.core.presentation.util.navigation.toEntries
+import com.home.presentation.garage_list.DiscoverScreen
+import com.home.presentation.garage_list.GarageListProvider
 import com.home.presentation.home.HomeScreenRoot
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
@@ -49,7 +47,7 @@ fun HomeNavigation(
         Navigator(navigationState)
     }
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.fillMaxSize(),
         bottomBar = {
             BottomNavigationAppBar(
                 selectedKey = navigationState.topLevelRoute,
@@ -68,21 +66,19 @@ fun HomeNavigation(
             entries = navigationState.toEntries(
                 entryProvider {
                     entry<HomeRoute.Garages> {
-                        Column (
+                        DiscoverScreen(
                             modifier = Modifier
                                 .fillMaxSize(),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.spacedBy(16.dp)
-                        ) {
-                            Text("Garages")
-                            Button(
-                                onClick = {
-                                    navigator.navigate(HomeRoute.GarageDetail)
-                                }
-                            ) {
-                                Text("Garage Detail")
-                            }
-                        }
+                            title = "Discover Garages",
+                            searchHint = "Search by Garage, Service or Location",
+                            services = GarageListProvider.garageList,
+                            onGarageClick = {
+                                navigator.navigate(HomeRoute.GarageDetail)
+                            },
+                            isListSelected = true,
+                            onSearchChange = {},
+                            onViewToggle = {}
+                        )
                     }
                     entry<HomeRoute.Map> {
                         Box(
@@ -151,7 +147,7 @@ class FakeNavigationEventDispatcherOwner :
 }
 
 
-val HOME_DESTINATIONS = mapOf(
+val HOME_DESTINATIONS: Map<NavKey, BottomNavItem> = mapOf(
     HomeRoute.Garages to BottomNavItem(
         icon = Icons.Outlined.Garage,
         title = "Garages"
