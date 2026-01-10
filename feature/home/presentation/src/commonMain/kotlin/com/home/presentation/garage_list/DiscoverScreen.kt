@@ -17,8 +17,7 @@ fun DiscoverScreen(
     isListSelected: Boolean,
     onGarageClick: () -> Unit = {},
     onSearchChange: (String) -> Unit,
-    onViewToggle: (Boolean) -> Unit,
-    imageContent: @Composable (serviceId: String) -> Unit
+    onViewToggle: (Boolean) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -33,8 +32,7 @@ fun DiscoverScreen(
         FilterChips()
         ServiceList(
             services = services,
-            onGarageClick = onGarageClick,
-            imageContent = imageContent
+            onGarageClick = onGarageClick
         )
     }
 }
@@ -48,7 +46,6 @@ private fun DiscoverScreenPreview() {
         services = GarageListProvider.garageList,
         isListSelected = true,
         onSearchChange = {},
-        onViewToggle = {},
-        imageContent = {}
+        onViewToggle = {}
     )
 }

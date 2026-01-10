@@ -77,24 +77,8 @@ fun HomeNavigation(
                             },
                             isListSelected = true,
                             onSearchChange = {},
-                            onViewToggle = {},
-                            imageContent = {}
+                            onViewToggle = {}
                         )
-                        /*Column (
-                            modifier = Modifier
-                                .fillMaxSize(),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.spacedBy(16.dp)
-                        ) {
-                            Text("Garages")
-                            Button(
-                                onClick = {
-                                    navigator.navigate(HomeRoute.GarageDetail)
-                                }
-                            ) {
-                                Text("Garage Detail")
-                            }
-                        }*/
                     }
                     entry<HomeRoute.Map> {
                         Box(
@@ -163,7 +147,7 @@ class FakeNavigationEventDispatcherOwner :
 }
 
 
-val HOME_DESTINATIONS = mapOf(
+val HOME_DESTINATIONS: Map<NavKey, BottomNavItem> = mapOf(
     HomeRoute.Garages to BottomNavItem(
         icon = Icons.Outlined.Garage,
         title = "Garages"

@@ -9,7 +9,8 @@ object GarageListProvider {
             distanceLabel = "1.5 km",
             ratingLabel = "4.5",
             priceLabel = "$50",
-            tags = listOf("Engine", "Tires")
+            tags = listOf("Engine", "Tires"),
+            imageUrl = "https://picsum.photos/id/1011/800/450"
         ),
         ServiceItemUi(
             id = "2",
@@ -18,7 +19,8 @@ object GarageListProvider {
             distanceLabel = "2.5 km",
             ratingLabel = "4.8",
             priceLabel = "$70",
-            tags = listOf("Oil", "Brakes")
+            tags = listOf("Oil", "Brakes"),
+            imageUrl = "https://images.unsplash.com/photo-1600880292203-757bb62b4baf"
         ),
         ServiceItemUi(
             id = "3",
@@ -27,7 +29,8 @@ object GarageListProvider {
             distanceLabel = "3.5 km",
             ratingLabel = "4.2",
             priceLabel = "$60",
-            tags = listOf("Engine", "Brakes")
+            tags = listOf("Engine", "Brakes"),
+            imageUrl = "https://picsum.photos/id/1015/800/450"
         ),
         ServiceItemUi(
             id = "4",
@@ -36,7 +39,8 @@ object GarageListProvider {
             distanceLabel = "4.5 km",
             ratingLabel = "4.9",
             priceLabel = "$80",
-            tags = listOf("Tires", "Oil")
+            tags = listOf("Tires", "Oil"),
+            imageUrl = "https://picsum.photos/id/1020/800/450"
         ),
         ServiceItemUi(
             id = "5",
@@ -45,7 +49,8 @@ object GarageListProvider {
             distanceLabel = "5.5 km",
             ratingLabel = "4.1",
             priceLabel = "$40",
-            tags = listOf("Engine", "Tires", "Brakes")
+            tags = listOf("Engine", "Tires", "Brakes"),
+            imageUrl = "https://images.unsplash.com/photo-1625047509248-ec889cbff17f"
         ),
         ServiceItemUi(
             id = "6",
@@ -54,7 +59,8 @@ object GarageListProvider {
             distanceLabel = "6.5 km",
             ratingLabel = "4.7",
             priceLabel = "$90",
-            tags = listOf("Oil")
+            tags = listOf("Oil"),
+            imageUrl = "https://picsum.photos/id/1024/800/450"
         ),
         ServiceItemUi(
             id = "7",
@@ -63,7 +69,8 @@ object GarageListProvider {
             distanceLabel = "7.5 km",
             ratingLabel = "4.3",
             priceLabel = "$55",
-            tags = listOf("Brakes")
+            tags = listOf("Brakes"),
+            imageUrl = "https://images.unsplash.com/photo-1617814076367-b759c7d7e738"
         ),
         ServiceItemUi(
             id = "8",
@@ -72,7 +79,8 @@ object GarageListProvider {
             distanceLabel = "8.5 km",
             ratingLabel = "4.6",
             priceLabel = "$65",
-            tags = listOf("Engine")
+            tags = listOf("Engine"),
+            imageUrl = "https://images.unsplash.com/photo-1590362891991-f776e747a588"
         ),
         ServiceItemUi(
             id = "9",
@@ -81,7 +89,8 @@ object GarageListProvider {
             distanceLabel = "9.5 km",
             ratingLabel = "4.0",
             priceLabel = "$35",
-            tags = listOf("Tires")
+            tags = listOf("Tires"),
+            imageUrl = "https://picsum.photos/id/1031/800/450"
         ),
         ServiceItemUi(
             id = "10",
@@ -90,7 +99,8 @@ object GarageListProvider {
             distanceLabel = "10.5 km",
             ratingLabel = "4.9",
             priceLabel = "$95",
-            tags = listOf("Engine", "Oil")
+            tags = listOf("Engine", "Oil"),
+            imageUrl = "https://picsum.photos/id/1033/800/450"
         ),
         ServiceItemUi(
             id = "11",
@@ -99,7 +109,8 @@ object GarageListProvider {
             distanceLabel = "11.5 km",
             ratingLabel = "4.2",
             priceLabel = "$45",
-            tags = listOf("Brakes", "Tires")
+            tags = listOf("Brakes", "Tires"),
+            imageUrl = "https://picsum.photos/id/1040/800/450"
         ),
         ServiceItemUi(
             id = "12",
@@ -108,7 +119,8 @@ object GarageListProvider {
             distanceLabel = "12.5 km",
             ratingLabel = "4.8",
             priceLabel = "$85",
-            tags = listOf("Engine", "Brakes", "Tires")
+            tags = listOf("Engine", "Brakes", "Tires"),
+            imageUrl = "https://picsum.photos/id/1050/800/450"
         ),
         ServiceItemUi(
             id = "13",
@@ -117,7 +129,8 @@ object GarageListProvider {
             distanceLabel = "13.5 km",
             ratingLabel = "4.4",
             priceLabel = "$75",
-            tags = listOf("Oil", "Tires")
+            tags = listOf("Oil", "Tires"),
+            imageUrl = "https://picsum.photos/id/1060/800/450"
         ),
         ServiceItemUi(
             id = "14",
@@ -126,7 +139,8 @@ object GarageListProvider {
             distanceLabel = "14.5 km",
             ratingLabel = "4.7",
             priceLabel = "$100",
-            tags = listOf("Engine", "Tires")
+            tags = listOf("Engine", "Tires"),
+            imageUrl = "https://picsum.photos/id/1074/800/450"
         ),
         ServiceItemUi(
             id = "15",
@@ -135,7 +149,8 @@ object GarageListProvider {
             distanceLabel = "15.5 km",
             ratingLabel = "4.1",
             priceLabel = "$30",
-            tags = listOf("Brakes", "Oil")
+            tags = listOf("Brakes", "Oil"),
+            imageUrl = "https://picsum.photos/id/1080/800/450"
         )
     )
 }

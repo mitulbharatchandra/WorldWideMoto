@@ -1,8 +1,6 @@
 package com.home.presentation.garage_list
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,7 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import com.core.presentation.util.networkimage.NetworkImage
 import com.kmp.designsystem.theme.AppTheme
 import com.kmp.designsystem.theme.Spacing
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -20,9 +18,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun ServiceCard(
     service: ServiceItemUi,
-    onGarageClick: () -> Unit = {},
-    imageContent: @Composable (serviceId: String) -> Unit
-
+    onGarageClick: () -> Unit = {}
 ) {
     Card(
         shape = MaterialTheme.shapes.extraLarge,
@@ -31,13 +27,13 @@ fun ServiceCard(
         }
     ) {
         Column {
-            Box(
+            NetworkImage(
+                imageUrl = service.imageUrl,
+                contentDescription = service.title,
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(16f / 9f)
-            ) {
-                imageContent(service.id)
-            }
+            )
 
             Column(
                 modifier = Modifier.padding(Spacing.md),
@@ -78,15 +74,9 @@ private fun ServiceCardPreview() {
                 distanceLabel = "5 miles away",
                 ratingLabel = "4.9 (120)",
                 priceLabel = "$50 - $100",
-                tags = listOf("Mobile", "Mechanic", "On-demand")
+                tags = listOf("Mobile", "Mechanic", "On-demand"),
+                imageUrl = "https://images.unsplash.com/photo-1583267747838-8f6b1c4e4e8a"
             )
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(16f / 9f)
-                    .background(Color.Gray)
-            )
-        }
+        )
     }
 }
