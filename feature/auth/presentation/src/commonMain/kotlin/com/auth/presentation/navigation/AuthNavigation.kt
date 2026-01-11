@@ -1,7 +1,10 @@
 package com.auth.presentation.navigation
 
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
@@ -14,6 +17,8 @@ import androidx.savedstate.serialization.SavedStateConfiguration
 import com.auth.presentation.forgetpassword.ForgetPasswordRoot
 import com.auth.presentation.login.LoginRoot
 import com.auth.presentation.signinwithphone.SignInWithPhoneRoot
+import com.core.presentation.util.navigation.ListDetailScene
+import com.core.presentation.util.navigation.rememberListDetailSceneStrategy
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 
@@ -34,37 +39,51 @@ fun AuthNavigation(
         },
         AuthRoute.Login
     )
-    Scaffold(
-        modifier = modifier
-    ) { innerPadding ->
-        NavDisplay(
-            backStack = authBackStack,
-            modifier = Modifier.padding(innerPadding),
-            entryDecorators = listOf(
-                rememberSaveableStateHolderNavEntryDecorator(),
-                rememberViewModelStoreNavEntryDecorator()
-            ),
-            entryProvider = entryProvider {
-                entry<AuthRoute.Login> {
-                    LoginRoot(
-                        onLoginSuccess = onLoginSuccess,
-                        onForgotPasswordClick = {
-                            authBackStack.add(
-                                AuthRoute.ForgotPassword(email = it)
-                            )
-                        },
-                        onSigInWithPhoneClick = {
-                            authBackStack.add(AuthRoute.SignInWithPhone)
-                        }
-                    )
-                }
-                entry<AuthRoute.ForgotPassword> { key ->
-                    ForgetPasswordRoot(email = key.email)
-                }
-                entry<AuthRoute.SignInWithPhone> {
-                    SignInWithPhoneRoot()
-                }
+    NavDisplay(
+        backStack = authBackStack,
+        sceneStrategy = rememberListDetailSceneStrategy(),
+        entryDecorators = listOf(
+            rememberSaveableStateHolderNavEntryDecorator(),
+            rememberViewModelStoreNavEntryDecorator()
+        ),
+        transitionSpec = {
+            slideInHorizontally { it } + fadeIn() togetherWith
+                    slideOutHorizontally { -it } + fadeOut()
+        },
+        popTransitionSpec = {
+            slideInHorizontally { -it } + fadeIn() togetherWith
+                    slideOutHorizontally { it } + fadeOut()
+        },
+        predictivePopTransitionSpec = {
+            slideInHorizontally { -it } + fadeIn() togetherWith
+                    slideOutHorizontally { it } + fadeOut()
+        },
+        entryProvider = entryProvider {
+            entry<AuthRoute.Login>(
+                metadata = ListDetailScene.listPane()
+            ) {
+                LoginRoot(
+                    onLoginSuccess = onLoginSuccess,
+                    onForgotPasswordClick = {
+                        authBackStack.add(
+                            AuthRoute.ForgotPassword(email = it)
+                        )
+                    },
+                    onSigInWithPhoneClick = {
+                        authBackStack.add(AuthRoute.SignInWithPhone)
+                    }
+                )
             }
-        )
-    }
+            entry<AuthRoute.ForgotPassword>(
+                metadata = ListDetailScene.detailPane()
+            ) { key ->
+                ForgetPasswordRoot(email = key.email)
+            }
+            entry<AuthRoute.SignInWithPhone>(
+                metadata = ListDetailScene.detailPane()
+            ) {
+                SignInWithPhoneRoot()
+            }
+        }
+    )
 }

@@ -1,5 +1,10 @@
 package com.home.presentation.navigation
 
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -9,8 +14,10 @@ import androidx.compose.material.icons.outlined.History
 import androidx.compose.material.icons.outlined.Map
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,11 +28,15 @@ import androidx.navigationevent.NavigationEventDispatcher
 import androidx.navigationevent.NavigationEventDispatcherOwner
 import androidx.navigationevent.compose.LocalNavigationEventDispatcherOwner
 import androidx.savedstate.serialization.SavedStateConfiguration
+import androidx.window.core.layout.WindowSizeClass.Companion.WIDTH_DP_MEDIUM_LOWER_BOUND
 import com.core.presentation.util.navigation.BottomNavItem
 import com.core.presentation.util.navigation.BottomNavigationAppBar
+import com.core.presentation.util.navigation.ListDetailScene
 import com.core.presentation.util.navigation.Navigator
+import com.core.presentation.util.navigation.rememberListDetailSceneStrategy
 import com.core.presentation.util.navigation.rememberNavigationState
 import com.core.presentation.util.navigation.toEntries
+import com.home.presentation.garage_details.GarageDetailsScreen
 import com.home.presentation.garage_list.DiscoverScreen
 import com.home.presentation.garage_list.GarageListProvider
 import com.home.presentation.home.HomeScreenRoot
@@ -46,6 +57,18 @@ fun HomeNavigation(
     val navigator = remember {
         Navigator(navigationState)
     }
+    val windowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
+    // Seed initial detail ONLY ONCE and ONLY for wide screens
+    LaunchedEffect(windowSizeClass) {
+        val isWide =
+            windowSizeClass.isWidthAtLeastBreakpoint(WIDTH_DP_MEDIUM_LOWER_BOUND)
+
+        val hasDetail = navigator.state.backStacks.keys.any { it is HomeRoute.GarageDetail }
+
+        if (isWide && !hasDetail) {
+            navigator.navigate(HomeRoute.GarageDetail(GarageListProvider.garageList[0].id))
+        }
+    }
     Scaffold(
         modifier = modifier.fillMaxSize(),
         bottomBar = {
@@ -63,9 +86,24 @@ fun HomeNavigation(
                 .fillMaxSize()
                 .padding(innerPadding),
             onBack = navigator::goBack,
+            sceneStrategy = rememberListDetailSceneStrategy(),
+            transitionSpec = {
+                slideInHorizontally { it } + fadeIn() togetherWith
+                        slideOutHorizontally { -it } + fadeOut()
+            },
+            popTransitionSpec = {
+                slideInHorizontally { -it } + fadeIn() togetherWith
+                        slideOutHorizontally { it } + fadeOut()
+            },
+            predictivePopTransitionSpec = {
+                slideInHorizontally { -it } + fadeIn() togetherWith
+                        slideOutHorizontally { it } + fadeOut()
+            },
             entries = navigationState.toEntries(
                 entryProvider {
-                    entry<HomeRoute.Garages> {
+                    entry<HomeRoute.Garages>(
+                        metadata = ListDetailScene.listPane()
+                    ) {
                         DiscoverScreen(
                             modifier = Modifier
                                 .fillMaxSize(),
@@ -73,14 +111,16 @@ fun HomeNavigation(
                             searchHint = "Search by Garage, Service or Location",
                             services = GarageListProvider.garageList,
                             onGarageClick = {
-                                navigator.navigate(HomeRoute.GarageDetail)
+                                navigator.navigate(HomeRoute.GarageDetail(it))
                             },
                             isListSelected = true,
                             onSearchChange = {},
                             onViewToggle = {}
                         )
                     }
-                    entry<HomeRoute.Map> {
+                    entry<HomeRoute.Map>(
+                        metadata = ListDetailScene.listPane()
+                    ) {
                         Box(
                             modifier = Modifier
                                 .fillMaxSize(),
@@ -89,7 +129,9 @@ fun HomeNavigation(
                             Text("Map")
                         }
                     }
-                    entry<HomeRoute.History> {
+                    entry<HomeRoute.History>(
+                        metadata = ListDetailScene.listPane()
+                    ) {
                         Box(
                             modifier = Modifier
                                 .fillMaxSize(),
@@ -102,14 +144,13 @@ fun HomeNavigation(
                             )
                         }
                     }
-                    entry<HomeRoute.GarageDetail> {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text("Garage Detail")
-                        }
+                    entry<HomeRoute.GarageDetail>(
+                        metadata = ListDetailScene.detailPane()
+                    ) {
+                        GarageDetailsScreen(
+                            garageId = it.garageId,
+                            onBookServiceClick = {}
+                        )
                     }
                 }
             )

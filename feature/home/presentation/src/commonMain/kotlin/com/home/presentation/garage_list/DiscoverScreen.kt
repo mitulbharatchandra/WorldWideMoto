@@ -15,7 +15,7 @@ fun DiscoverScreen(
     searchHint: String,
     services: List<ServiceItemUi>,
     isListSelected: Boolean,
-    onGarageClick: () -> Unit = {},
+    onGarageClick: (String) -> Unit = {},
     onSearchChange: (String) -> Unit,
     onViewToggle: (Boolean) -> Unit
 ) {
@@ -32,7 +32,9 @@ fun DiscoverScreen(
         FilterChips()
         ServiceList(
             services = services,
-            onGarageClick = onGarageClick
+            onGarageClick = {
+                onGarageClick(it)
+            }
         )
     }
 }
