@@ -26,6 +26,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -87,172 +88,176 @@ fun LoginScreen(
     uiState: LoginState,
     onAction: (LoginAction) -> Unit,
 ) {
-    Surface {
-        val scrollState = rememberScrollState()
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
-                .verticalScroll(scrollState),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+    Scaffold { innerPadding ->
+        Surface(
+            modifier = Modifier.padding(innerPadding),
         ) {
-
-            if (uiState.isLoading) {
-                CircularProgressIndicator()
-            }
-
-            Text(
-                text = stringResource(Res.string.welcome_to_world_wide_auto),
-                style = MaterialTheme.typography.headlineMedium
-            )
-            Text(
-                text = "Sign in or create an account to get started.",
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(top = 8.dp, bottom = 32.dp)
-            )
-
-            Spacer(modifier = Modifier.height(32.dp))
-
-            AuthErrorText(
-                error = uiState.authError,
-                modifier = Modifier.fillMaxWidth()
-            )
-            uiState.throwable?.let {
-                Text(
-                    text = it.message ?: "",
-                    color = MaterialTheme.colorScheme.error,
-                )
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-            var email by remember { mutableStateOf("") }
-            OutlinedTextField(
-                value = email,
-                onValueChange = {
-                    email = it
-                    onAction(LoginAction.EmailChanged(it))
-                },
-                label = { Text("Email address") },
-                leadingIcon = { Icon(Icons.Filled.Email, contentDescription = "Email Icon") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            var password by remember { mutableStateOf("") }
-            OutlinedTextField(
-                value = password,
-                onValueChange = {
-                    password = it
-                    onAction(LoginAction.PasswordChanged(it))
-                },
-                label = { Text("Password") },
-                leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = "Password Icon") },
-                visualTransformation = PasswordVisualTransformation(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                modifier = Modifier.fillMaxWidth(),
-                supportingText = {
-                    PasswordErrorText(
-                        error = uiState.passwordValidationError
-                    )
-                }
-            )
-
-            Text(
-                text = "Forgot Password?",
+            val scrollState = rememberScrollState()
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable (
-                        onClick = {
-                            onAction(LoginAction.OnForgotPasswordClick(email = email))
-                        },
-                        enabled = !uiState.isLoading
-                    )
-                    .padding(top = 16.dp),
-                textAlign = TextAlign.End,
-                style = MaterialTheme.typography.bodyMedium
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
+                    .fillMaxSize()
+                    .padding(16.dp)
+                    .verticalScroll(scrollState),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
-                Button(
-                    onClick = {
-                        onAction(
-                            LoginAction.SignupWithEmail(
-                                email = email,
-                                password = password
-                            )
-                        )
-                    },
-                    shape = RoundedCornerShape(50),
-                    modifier = Modifier.weight(1f).padding(end = 8.dp),
-                    enabled = uiState.canSubmit
-                ) {
-                    Text("Sign Up")
-                }
-                Button(
-                    onClick = {
-                        onAction(
-                            LoginAction.LoginWithEmail(
-                                email = email,
-                                password = password
-                            )
-                        )
-                    },
-                    shape = RoundedCornerShape(50),
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
-                    modifier = Modifier.weight(1f).padding(start = 8.dp),
-                    enabled = uiState.canSubmit
-                ) {
-                    Text("Sign In")
-                }
-            }
 
-            Spacer(modifier = Modifier.height(32.dp))
+                if (uiState.isLoading) {
+                    CircularProgressIndicator()
+                }
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                HorizontalDivider(modifier = Modifier.weight(1f))
                 Text(
-                    text = "OR",
-                    modifier = Modifier.padding(horizontal = 8.dp),
-                    fontSize = 14.sp
+                    text = stringResource(Res.string.welcome_to_world_wide_auto),
+                    style = MaterialTheme.typography.headlineMedium
                 )
-                HorizontalDivider(modifier = Modifier.weight(1f))
-            }
+                Text(
+                    text = "Sign in or create an account to get started.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = 8.dp, bottom = 32.dp)
+                )
 
-            Spacer(modifier = Modifier.height(16.dp))
-            AppleSignInButton(
-                onResult = {}
-            ) { onClick ->
-                AppleSignInButtonDesign(
-                    onClick = onClick
+                Spacer(modifier = Modifier.height(32.dp))
+
+                AuthErrorText(
+                    error = uiState.authError,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                uiState.throwable?.let {
+                    Text(
+                        text = it.message ?: "",
+                        color = MaterialTheme.colorScheme.error,
+                    )
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                var email by remember { mutableStateOf("") }
+                OutlinedTextField(
+                    value = email,
+                    onValueChange = {
+                        email = it
+                        onAction(LoginAction.EmailChanged(it))
+                    },
+                    label = { Text("Email address") },
+                    leadingIcon = { Icon(Icons.Filled.Email, contentDescription = "Email Icon") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                var password by remember { mutableStateOf("") }
+                OutlinedTextField(
+                    value = password,
+                    onValueChange = {
+                        password = it
+                        onAction(LoginAction.PasswordChanged(it))
+                    },
+                    label = { Text("Password") },
+                    leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = "Password Icon") },
+                    visualTransformation = PasswordVisualTransformation(),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                    modifier = Modifier.fillMaxWidth(),
+                    supportingText = {
+                        PasswordErrorText(
+                            error = uiState.passwordValidationError
+                        )
+                    }
+                )
+
+                Text(
+                    text = "Forgot Password?",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable(
+                            onClick = {
+                                onAction(LoginAction.OnForgotPasswordClick(email = email))
+                            },
+                            enabled = !uiState.isLoading
+                        )
+                        .padding(top = 16.dp),
+                    textAlign = TextAlign.End,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    Button(
+                        onClick = {
+                            onAction(
+                                LoginAction.SignupWithEmail(
+                                    email = email,
+                                    password = password
+                                )
+                            )
+                        },
+                        shape = RoundedCornerShape(50),
+                        modifier = Modifier.weight(1f).padding(end = 8.dp),
+                        enabled = uiState.canSubmit
+                    ) {
+                        Text("Sign Up")
+                    }
+                    Button(
+                        onClick = {
+                            onAction(
+                                LoginAction.LoginWithEmail(
+                                    email = email,
+                                    password = password
+                                )
+                            )
+                        },
+                        shape = RoundedCornerShape(50),
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
+                        modifier = Modifier.weight(1f).padding(start = 8.dp),
+                        enabled = uiState.canSubmit
+                    ) {
+                        Text("Sign In")
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(32.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    HorizontalDivider(modifier = Modifier.weight(1f))
+                    Text(
+                        text = "OR",
+                        modifier = Modifier.padding(horizontal = 8.dp),
+                        fontSize = 14.sp
+                    )
+                    HorizontalDivider(modifier = Modifier.weight(1f))
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+                AppleSignInButton(
+                    onResult = {}
+                ) { onClick ->
+                    AppleSignInButtonDesign(
+                        onClick = onClick
+                    )
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                val webClientId = stringResource(Res.string.web_client_id)
+                GoogleSignInButton(
+                    onClick = { onAction(LoginAction.OnLoginWithGoogleClick(webClientId)) }
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                PhoneSignInButton(onClick = { onAction(LoginAction.OnSigInWithPhoneClick) })
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    text = "By continuing, you agree to our Terms and Privacy Policy.",
+                    style = MaterialTheme.typography.bodySmall,
+                    textAlign = TextAlign.Center
                 )
             }
-            Spacer(modifier = Modifier.height(16.dp))
-            val webClientId = stringResource(Res.string.web_client_id)
-            GoogleSignInButton(
-                onClick = { onAction(LoginAction.OnLoginWithGoogleClick(webClientId)) }
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            PhoneSignInButton(onClick = { onAction(LoginAction.OnSigInWithPhoneClick) })
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Text(
-                text = "By continuing, you agree to our Terms and Privacy Policy.",
-                style = MaterialTheme.typography.bodySmall,
-                textAlign = TextAlign.Center
-            )
         }
     }
 }

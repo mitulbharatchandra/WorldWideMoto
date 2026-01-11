@@ -14,7 +14,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 internal fun ServiceList(
     services: List<ServiceItemUi>,
-    onGarageClick: () -> Unit = {}
+    onGarageClick: (String) -> Unit = {}
 ) {
     val scrollState = rememberLazyListState()
     LazyColumn(
@@ -27,7 +27,9 @@ internal fun ServiceList(
         items(services) { service ->
             ServiceCard(
                 service = service,
-                onGarageClick = onGarageClick
+                onGarageClick = {
+                    onGarageClick(it)
+                }
             )
         }
     }

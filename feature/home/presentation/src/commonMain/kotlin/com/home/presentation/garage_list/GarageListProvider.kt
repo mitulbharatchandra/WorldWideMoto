@@ -153,4 +153,8 @@ object GarageListProvider {
             imageUrl = "https://picsum.photos/id/1080/800/450"
         )
     )
+
+    fun getGarageById(id: String): ServiceItemUi? =
+        garageList.firstOrNull { it.id == id }
+
 }

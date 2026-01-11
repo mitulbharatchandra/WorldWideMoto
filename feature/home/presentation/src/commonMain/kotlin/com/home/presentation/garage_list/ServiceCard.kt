@@ -18,12 +18,12 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun ServiceCard(
     service: ServiceItemUi,
-    onGarageClick: () -> Unit = {}
+    onGarageClick: (String) -> Unit = {}
 ) {
     Card(
         shape = MaterialTheme.shapes.extraLarge,
         onClick = {
-            onGarageClick()
+            onGarageClick(service.id)
         }
     ) {
         Column {

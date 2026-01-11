@@ -9,7 +9,7 @@ data object HomeRoute: NavKey {
     data object Garages: NavKey
 
     @Serializable
-    data object GarageDetail: NavKey
+    data class GarageDetail(val garageId: String): NavKey
 
     @Serializable
     data object Map: NavKey

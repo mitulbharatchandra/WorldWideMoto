@@ -77,6 +77,8 @@ kotlin {
 
                 implementation(libs.jetbrains.navigation3.ui)
                 implementation(libs.jetbrains.lifecycle.viewmodel.nav3)
+                implementation(libs.material3.adaptive)
+                implementation(libs.material3.adaptive.layout)
             }
         }
 

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,20 +17,26 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun SignInWithPhoneRoot(modifier: Modifier = Modifier) {
-    Surface {
-        val scrollState = rememberScrollState()
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
-                .verticalScroll(scrollState),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+    Scaffold(
+        modifier = modifier
+    ) { innerPadding ->
+        Surface(
+            modifier = Modifier.padding(innerPadding),
         ) {
-            Text(
-                text = "Sign In With Phone Screen",
-                style = MaterialTheme.typography.headlineMedium
-            )
+            val scrollState = rememberScrollState()
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
+                    .verticalScroll(scrollState),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = "Sign In With Phone Screen",
+                    style = MaterialTheme.typography.headlineMedium
+                )
+            }
         }
     }
 }

@@ -34,6 +34,7 @@ jetbrainsKotlinJvm = "2.3.0"
 #Navigation
 cmpNavigation3 = "1.0.0-alpha06"
 kotlinxSerializationJson = "1.9.0"
+adaptive = "1.2.0"
 
 #Google Signin
 credentials = "1.6.0-rc01"
@@ -84,6 +85,10 @@ firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
 jetbrains-navigation3-ui = { module = "org.jetbrains.androidx.navigation3:navigation3-ui", version.ref = "cmpNavigation3" }
 jetbrains-lifecycle-viewmodel-nav3 = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "androidx-lifecycle" }
 jetbrains-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel", version.ref = "androidx-lifecycle"}
+
+#Adaptive Navigation
+material3-adaptive = { module = "org.jetbrains.compose.material3.adaptive:adaptive", version.ref = "adaptive" }
+material3-adaptive-layout = { module = "org.jetbrains.compose.material3.adaptive:adaptive-layout", version.ref = "adaptive" }
 
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 
