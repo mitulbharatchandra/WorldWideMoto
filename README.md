@@ -1,4 +1,6 @@
-This is a Kotlin Multiplatform project targeting Android, iOS.
+This is a Compose Multiplatform project targeting Android, iOS with FirebaseAuth and Navigation 3.
+
+https://github.com/user-attachments/assets/2c8782a3-e979-4571-a857-00d4d54eb3c9
 
 * [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
   It contains several subfolders:
