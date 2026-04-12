@@ -24,7 +24,7 @@ fun DiscoverScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        DiscoverTopBar(title = title)
+        //DiscoverTopBar(title = title)
         SearchSection(
             hint = searchHint,
             onValueChange = onSearchChange

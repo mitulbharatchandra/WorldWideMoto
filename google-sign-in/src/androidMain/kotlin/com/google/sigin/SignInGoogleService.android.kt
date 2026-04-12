@@ -59,7 +59,7 @@ actual class SignInGoogleProvider(private val context: Context) {
                 context = context,
             )
             val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(result.credential.data)
-            Log.i(TAG, result.toString())
+            Log.i(TAG, googleIdTokenCredential.profilePictureUri.toString())
 
             Log.i(TAG, "Sign in Successful!")
             GoogleUser(
@@ -71,16 +71,16 @@ actual class SignInGoogleProvider(private val context: Context) {
         } catch (e: NoCredentialException) {
             throw GoogleSignInError.NoCredentialException
         } catch (e: GetCredentialCustomException) {
-            Log.e(TAG, failureMessage + ": Issue with custom credential request", e)
+            Log.e(TAG, "$failureMessage: Issue with custom credential request", e)
             throw e
         } catch (e: GetCredentialCancellationException) {
-            Log.e(TAG, failureMessage + ": Sign-in was cancelled", e)
+            Log.e(TAG, "$failureMessage: Sign-in was cancelled", e)
             throw e
         } catch (e: GoogleIdTokenParsingException) {
-            Log.e(TAG, failureMessage + ": Issue with parsing received GoogleIdToken", e)
+            Log.e(TAG, "$failureMessage: Issue with parsing received GoogleIdToken", e)
             throw e
         } catch (e: GetCredentialException) {
-            Log.e(TAG, failureMessage + ": Failure getting credentials", e)
+            Log.e(TAG, "$failureMessage: Failure getting credentials", e)
             throw e
         }
     }

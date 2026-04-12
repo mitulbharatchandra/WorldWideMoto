@@ -71,6 +71,9 @@ fun HomeNavigation(
     }
     Scaffold(
         modifier = modifier.fillMaxSize(),
+        topBar = {
+            HomeNavigationTopBar(title = HOME_DESTINATIONS[navigationState.topLevelRoute]?.title ?: "Home")
+        },
         bottomBar = {
             BottomNavigationAppBar(
                 selectedKey = navigationState.topLevelRoute,
