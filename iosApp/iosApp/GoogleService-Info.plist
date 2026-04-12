@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1032867143346-ue3gfgq7bta372sj8rjh8pou0viibki5.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1032867143346-ue3gfgq7bta372sj8rjh8pou0viibki5</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1032867143346-c061cci1kc01holv3iha81ks47rd67nj.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBLvVAy3V-9U29YUH6aJWvtnP-wzUR9XEo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1032867143346</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.worldwidemoto</string>
+	<key>PROJECT_ID</key>
+	<string>world-wide-moto</string>
+	<key>STORAGE_BUCKET</key>
+	<string>world-wide-moto.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1032867143346:ios:620dc04166b4456ab7f3ab</string>
+</dict>
+</plist>

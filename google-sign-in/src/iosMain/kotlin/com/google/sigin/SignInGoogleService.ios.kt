@@ -20,7 +20,7 @@ actual class SignInGoogleProvider() {
         if (rootViewController == null) continutation.resumeWithException(Throwable(message = "rootViewController not found"))
         else {
             GIDSignIn.sharedInstance
-                .signInWithPresentingViewController(rootViewController,null, null) { gidSignInResult, nsError ->
+                .signInWithPresentingViewController(rootViewController, hint = null, additionalScopes = null) { gidSignInResult, nsError ->
                     nsError?.let { error -> continutation.resumeWithException(Throwable(message = error.localizedDescription)) }
                     val user = gidSignInResult?.user
                     val idToken = user?.idToken?.tokenString

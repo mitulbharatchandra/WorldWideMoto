@@ -8,5 +8,6 @@ internal fun FirebaseUser.toAuthUser(): AuthUser =
         id = uid,
         email = email,
         isAnonymous = isAnonymous,
-        isEmailVerified = isEmailVerified
+        isEmailVerified = isEmailVerified,
+        photoUrl = photoUrl.toString()
     )
