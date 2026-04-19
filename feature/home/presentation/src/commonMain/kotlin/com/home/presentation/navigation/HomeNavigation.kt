@@ -47,6 +47,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun HomeNavigation(
     onSignOutSuccess: () -> Unit,
+    onProfileClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val navigationState = rememberNavigationState(
@@ -72,7 +73,10 @@ fun HomeNavigation(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            HomeNavigationTopBar(title = HOME_DESTINATIONS[navigationState.topLevelRoute]?.title ?: "Home")
+            HomeNavigationTopBar(
+                title = HOME_DESTINATIONS[navigationState.topLevelRoute]?.title ?: "Home",
+                onProfileClick = onProfileClick
+            )
         },
         bottomBar = {
             BottomNavigationAppBar(
@@ -166,7 +170,8 @@ fun HomeNavigation(
 fun HomeNavigationPreview() {
     PreviewNavWrapper {
         HomeNavigation(
-            onSignOutSuccess = {}
+            onSignOutSuccess = {},
+            onProfileClick = {}
         )
     }
 }

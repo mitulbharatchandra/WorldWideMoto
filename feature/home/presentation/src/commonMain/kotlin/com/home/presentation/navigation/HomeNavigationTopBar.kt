@@ -2,6 +2,7 @@ package com.home.presentation.navigation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -30,6 +31,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun HomeNavigationTopBar(
     title: String,
+    onProfileClick: () -> Unit,
     viewModel: HomeViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -49,11 +51,12 @@ fun HomeNavigationTopBar(
                         .size(40.dp)
                         .clip(CircleShape)
                         .background(Color.LightGray)
-                        .border(1.dp, Color.White, CircleShape),
+                        .border(1.dp, Color.White, CircleShape)
+                        .clickable { onProfileClick() },
                     contentScale = ContentScale.Crop // IMPORTANT for proper avatar fill
                 )
             } else {
-                IconButton(onClick = {}) {
+                IconButton(onClick = onProfileClick) {
                     Icon(
                         imageVector = Icons.Default.AccountCircle,
                         contentDescription = "Profile Icon"
@@ -69,7 +72,8 @@ fun HomeNavigationTopBar(
 fun DiscoverTopBarPreviewLight() {
     AppTheme {
         HomeNavigationTopBar(
-            title = "Discover"
+            title = "Discover",
+            onProfileClick = {}
         )
     }
 }
@@ -79,7 +83,8 @@ fun DiscoverTopBarPreviewLight() {
 fun DiscoverTopBarPreviewDark() {
     AppTheme(darkTheme = true) {
         HomeNavigationTopBar(
-            title = "Discover"
+            title = "Discover",
+            onProfileClick = {}
         )
     }
 }

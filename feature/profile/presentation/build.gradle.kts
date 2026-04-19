@@ -56,11 +56,11 @@ kotlin {
                 implementation(compose.components.uiToolingPreview)
                 implementation(libs.androidx.lifecycle.viewmodelCompose)
                 implementation(libs.androidx.lifecycle.runtimeCompose)
+                implementation(libs.kotlinx.collections.immutable)
 
                 implementation(projects.core.designsystem)
                 implementation(projects.core.presentation)
                 implementation(projects.feature.auth.domain)
-                implementation(projects.feature.profile.presentation)
                 implementation(projects.kmpAuthApi)
 
                 implementation(libs.jetbrains.navigation3.ui)
@@ -115,7 +115,7 @@ compose.resources {
 }
 
 android {
-    namespace = "com.home.presentation"
+    namespace = "com.profile.presentation"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

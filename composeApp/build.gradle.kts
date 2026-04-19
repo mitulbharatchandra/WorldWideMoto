@@ -58,6 +58,8 @@ kotlin {
             implementation(projects.feature.auth.domain)
             implementation(projects.feature.auth.data)
             implementation(projects.feature.home.presentation)
+            implementation(projects.feature.profile.presentation)
+            implementation(projects.feature.business.presentation)
             implementation(projects.googleSignIn)
             implementation(projects.appleSignIn)
             implementation(projects.kmpAuthApi)

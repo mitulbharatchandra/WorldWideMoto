@@ -79,6 +79,7 @@ kotlin {
                 implementation(libs.jetbrains.lifecycle.viewmodel.nav3)
                 implementation(libs.material3.adaptive)
                 implementation(libs.material3.adaptive.layout)
+                implementation(libs.kotlinx.collections.immutable)
             }
         }
 
